@@ -1,0 +1,276 @@
+import { useEffect, useState } from "react";
+import MainLayout from "../layouts/MainLayout";
+import siteConfig from "../config/siteConfig";
+import { supabase } from "../lib/supabase";
+import {
+  FaWhatsapp,
+  FaPlayCircle,
+  FaStar
+} from "react-icons/fa";
+
+export default function Home() {
+
+  const [reviews, setReviews] = useState([]);
+const [visibleReviews, setVisibleReviews] = useState([]);
+const [averageRating, setAverageRating] = useState(5);
+const [heroImage, setHeroImage] = useState(siteConfig.heroImage);
+
+useEffect(() => {
+  loadReviews();
+  loadHeroImage();
+}, []);
+
+async function loadReviews() {
+  const { data, error } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("status", "Approved")
+    .order("created_at", { ascending: false });
+
+  console.log("Reviews:", data);
+  console.log("Error:", error);
+
+  if (error) {
+    alert(error.message);
+    console.error(error);
+    return;
+  }
+
+  setReviews(data || []);
+  setVisibleReviews((data || []).slice(0, 10));
+
+  if (data.length > 0) {
+    const avg =
+      data.reduce((sum, item) => sum + item.rating, 0) /
+      data.length;
+
+    setAverageRating(avg.toFixed(1));
+  }
+}
+
+async function loadHeroImage() {
+  const { data, error } = await supabase
+    .from("media")
+    .select("file_url")
+    .eq("media_key", "home_hero")
+    .single();
+
+  if (!error && data?.file_url) {
+    setHeroImage(data.file_url);
+  }
+}
+
+useEffect(() => {
+  if (reviews.length <= 10) return;
+
+  const interval = setInterval(() => {
+    setVisibleReviews((current) => {
+      // Reviews that are NOT currently visible
+      const hiddenReviews = reviews.filter(
+        (review) =>
+          !current.some((visible) => visible.id === review.id)
+      );
+
+      if (hiddenReviews.length === 0) return current;
+
+      // Pick one hidden review
+      const nextReview =
+        hiddenReviews[
+          Math.floor(Math.random() * hiddenReviews.length)
+        ];
+
+      // Replace one random visible review
+      const replaceIndex = Math.floor(
+        Math.random() * current.length
+      );
+
+      const updated = [...current];
+      updated[replaceIndex] = nextReview;
+
+      return updated;
+    });
+  }, 6000);
+
+  return () => clearInterval(interval);
+}, [reviews]);
+
+
+  return (
+    <MainLayout>
+      <section className="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white min-h-[90vh] flex items-center">
+
+        <div className="max-w-7xl mx-auto px-6 py-20 w-full">
+
+          <div className="grid lg:grid-cols-2 gap-16 items-center">
+
+            {/* LEFT */}
+
+            <div>
+
+              <p className="text-yellow-400 font-bold tracking-[0.35em] uppercase">
+                Teaching English Since 2019
+              </p>
+
+              <h1 className="text-5xl lg:text-7xl font-black leading-tight mt-6">
+                Learn English
+                <br />
+                With Confidence.
+              </h1>
+
+              <p className="mt-8 text-xl leading-9 text-slate-300 max-w-xl">
+                Professional English lessons for children,
+                teenagers and adults. Learn confidently with
+                practical speaking, grammar, pronunciation and
+                real-life communication.
+              </p>
+
+              <div className="flex flex-wrap gap-5 mt-10">
+
+                <a
+                  href={`https://wa.me/${siteConfig.whatsapp.replace("+", "")}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold hover:scale-105 duration-300 shadow-xl"
+                >
+                  <FaWhatsapp />
+                  Book Free Trial
+                </a>
+
+                <a
+                  href={siteConfig.youtube}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="flex items-center gap-3 border border-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-black duration-300"
+                >
+                  <FaPlayCircle />
+                  Watch Introduction
+                </a>
+
+              </div>
+
+              <div className="grid grid-cols-3 gap-8 mt-16">
+
+                <div>
+                  <h2 className="text-4xl font-black text-yellow-400">6+</h2>
+                  <p className="text-slate-300 mt-2">Years Teaching</p>
+                </div>
+
+                <div>
+                  <h2 className="text-4xl font-black text-yellow-400">1000+</h2>
+                  <p className="text-slate-300 mt-2">Lessons</p>
+                </div>
+
+                <div>
+                  <h2 className="text-4xl font-black text-yellow-400">5★</h2>
+                  <p className="text-slate-300 mt-2">Student Rating</p>
+                </div>
+
+              </div>
+
+            </div>
+
+            {/* RIGHT */}
+
+            <div className="flex justify-center">
+
+              <div className="w-[450px] h-[620px] rounded-3xl overflow-hidden shadow-2xl border-4 border-yellow-400 bg-white">
+
+                <img
+                  src={heroImage}
+                  alt="Collins Classroom"
+                  className="w-full h-full object-cover object-top"
+                />
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </section>
+
+      {/* ================= REVIEWS ================= */}
+
+<section className="bg-slate-100 py-20">
+
+  <div className="max-w-7xl mx-auto px-6">
+
+    <div className="text-center">
+
+      <h2 className="text-4xl font-black">
+        ⭐ Student Reviews
+      </h2>
+
+      <p className="text-2xl font-bold text-yellow-500 mt-4">
+        {averageRating} / 5.0
+      </p>
+
+      <p className="text-slate-500 mt-2">
+        Based on {reviews.length} verified student reviews
+      </p>
+
+    </div>
+
+    <div className="grid lg:grid-cols-2 xl:grid-cols-2 gap-6 mt-14">
+
+      {visibleReviews.map((review) => (
+
+        <div
+  key={review.id}
+  className="bg-white rounded-2xl shadow-lg p-6 hover:shadow-xl transition-all duration-700 flex flex-col justify-between"
+>
+
+          <div className="flex mb-4">
+
+            {[1,2,3,4,5].map((star) => (
+
+              <FaStar
+                key={star}
+                className={
+                  star <= review.rating
+                    ? "text-yellow-400"
+                    : "text-gray-300"
+                }
+              />
+
+            ))}
+
+          </div>
+
+          <p className="text-slate-700 leading-7 italic">
+
+            "{review.comment}"
+
+          </p>
+
+          <div className="mt-6">
+
+            <div className="mt-6">
+
+  <h4 className="font-bold text-lg">
+    {review.reviewer_name}
+  </h4>
+
+  <p className="text-green-600 font-semibold text-sm mt-1">
+    ✔ Verified Student
+  </p>
+
+</div>
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
+
+  </div>
+
+</section>
+
+    </MainLayout>
+  );
+}
