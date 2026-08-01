@@ -65,10 +65,15 @@ useEffect(() => {
       )
     `);
 
+    console.log("Students:", data);
+console.log("Student Count:", data?.length);
+console.log("Error:", error);
+
   if (error) {
-    console.error(error);
-    return;
-  }
+  console.error("Students Error:", error);
+  alert(JSON.stringify(error, null, 2));
+  return;
+}
 
   setStudents(data);
 }
