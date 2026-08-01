@@ -50,32 +50,6 @@ useEffect(() => {
   localStorage.setItem("adminTab", active);
 }, [active]);
 
- async function loadStudents() {
-  console.log("loadStudents called");
-
-  const {
-    data: { user },
-  } = await supabase.auth.getUser();
-
-  console.log("Logged in user:", user);
-
-  const { data, error } = await supabase
-    .from("profiles")
-    .select("*")
-    .eq("id", user.id);
-
-  console.log("Students:", data);
-  console.log("Student Count:", data?.length);
-  console.log("Error:", error);
-
-  if (error) {
-    console.error(error);
-    return;
-  }
-
-  setStudents(data);
-}
-
 async function approvePayment(id) {
   try {
     setProcessingPayment(id);
@@ -261,19 +235,34 @@ async function saveStudent() {
   console.log("Payments:", data);
 }
 
-async function loadCourses() {
+async function loadStudents() {
+  console.log("loadStudents called");
+
   const { data, error } = await supabase
-    .from("courses")
-    .select("id, title")
-    .eq("active", true)
-    .order("title");
+    .from("profiles")
+    .select(`
+      id,
+      full_name,
+      email,
+      status,
+      student_courses(
+        course_id,
+        courses(
+          id,
+          title
+        )
+      )
+    `);
+
+  console.log(data);
+  console.log(error);
 
   if (error) {
     console.error(error);
     return;
   }
 
-  setCourses(data);
+  setStudents(data || []);
 }
 
 async function loadDashboardStats() {
@@ -309,6 +298,20 @@ async function loadDashboardStats() {
     ) || 0;
 
   setRevenue(totalRevenue);
+}
+
+async function loadCourses() {
+  const { data, error } = await supabase
+    .from("courses")
+    .select("*")
+    .order("id");
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  setCourses(data || []);
 }
 
 async function deleteStudent(id) {
