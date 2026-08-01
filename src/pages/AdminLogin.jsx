@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { FaEye, FaEyeSlash } from "react-icons/fa";
 import { supabase } from "../lib/supabase";
 
 export default function AdminLogin() {
@@ -7,6 +8,7 @@ export default function AdminLogin() {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+const [showPassword, setShowPassword] = useState(false);
 
   async function handleLogin(e) {
   e.preventDefault();
@@ -69,13 +71,23 @@ export default function AdminLogin() {
           onChange={(e) => setEmail(e.target.value)}
         />
 
-        <input
-          type="password"
-          placeholder="Password"
-          className="w-full border p-3 mb-6 rounded"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
+        <div className="relative mb-6">
+  <input
+    type={showPassword ? "text" : "password"}
+    placeholder="Password"
+    className="w-full border p-3 pr-12 rounded"
+    value={password}
+    onChange={(e) => setPassword(e.target.value)}
+  />
+
+  <button
+    type="button"
+    onClick={() => setShowPassword(!showPassword)}
+    className="absolute right-4 top-1/2 -translate-y-1/2 text-gray-500 hover:text-gray-700"
+  >
+    {showPassword ? <FaEyeSlash /> : <FaEye />}
+  </button>
+</div>
 
         <button
           className="w-full bg-blue-700 text-white p-3 rounded"
