@@ -12,6 +12,8 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 
+console.log("ADMIN COMPONENT LOADED");
+
 export default function Admin() {
   const [students, setStudents] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -49,6 +51,7 @@ useEffect(() => {
 }, [active]);
 
  async function loadStudents() {
+  console.log("loadStudents called");
   const { data, error } = await supabase
     .from("profiles")
     .select(`
