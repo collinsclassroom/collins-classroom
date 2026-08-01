@@ -591,8 +591,8 @@ async function deleteStudent(id) {
                               >
 
                                 <td className="py-5 font-semibold">
-                                  {payment.profiles.full_name}
-                                </td>
+  {payment.profiles?.full_name || "Unknown User"}
+</td>
 
                                 <td>
                                   ${payment.amount}
@@ -920,7 +920,7 @@ async function deleteStudent(id) {
                             >
 
                               <td className="py-5 font-semibold">
-                                {payment.profiles.full_name}
+                               payment.profiles?.full_name || "Unknown User"
                               </td>
 
                               <td>
