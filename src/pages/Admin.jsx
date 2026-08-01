@@ -52,31 +52,26 @@ useEffect(() => {
 
  async function loadStudents() {
   console.log("loadStudents called");
+
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  console.log("Logged in user:", user);
+
   const { data, error } = await supabase
     .from("profiles")
-    .select(`
-      id,
-      full_name,
-      email,
-      status,
-      student_courses(
-        course_id,
-        courses(
-          id,
-          title
-        )
-      )
-    `);
+    .select("*")
+    .eq("id", user.id);
 
-    console.log("Students:", data);
-console.log("Student Count:", data?.length);
-console.log("Error:", error);
+  console.log("Students:", data);
+  console.log("Student Count:", data?.length);
+  console.log("Error:", error);
 
   if (error) {
-  console.error("Students Error:", error);
-  alert(JSON.stringify(error, null, 2));
-  return;
-}
+    console.error(error);
+    return;
+  }
 
   setStudents(data);
 }
