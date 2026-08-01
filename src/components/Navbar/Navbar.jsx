@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import {
   FaBars,
   FaTimes,
@@ -16,6 +16,7 @@ export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const location = useLocation();
+  const navigate = useNavigate();
   const isAdmin = location.pathname.startsWith("/admin");
 
   useEffect(() => {
@@ -57,6 +58,21 @@ export default function Navbar() {
     },
   ];
 
+  async function handleLogout() {
+  const { error } = await supabase.auth.signOut();
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  navigate("/admin-login");
+}
+
+function handleLock() {
+  navigate("/admin-login");
+}
+
   return (
     <>
       <header className="sticky top-0 z-50 border-b bg-white/95 backdrop-blur shadow-sm">
@@ -86,16 +102,28 @@ export default function Navbar() {
 
           {isAdmin ? (
             <div className="flex items-center gap-3">
-              <button className="flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2 font-semibold text-white transition hover:bg-blue-800">
-                <FaLock />
-                <span className="hidden sm:inline">Lock</span>
-              </button>
 
-              <button className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700">
-                <FaSignOutAlt />
-                <span className="hidden sm:inline">Sign Out</span>
-              </button>
-            </div>
+  <button
+    onClick={handleLock}
+    className="flex items-center gap-2 rounded-xl bg-blue-700 px-4 py-2 font-semibold text-white transition hover:bg-blue-800"
+  >
+    <FaLock />
+    <span className="hidden sm:inline">
+      Lock
+    </span>
+  </button>
+
+  <button
+    onClick={handleLogout}
+    className="flex items-center gap-2 rounded-xl bg-red-600 px-4 py-2 font-semibold text-white transition hover:bg-red-700"
+  >
+    <FaSignOutAlt />
+    <span className="hidden sm:inline">
+      Sign Out
+    </span>
+  </button>
+
+</div>
           ) : (
             <>
               {/* Desktop / Tablet Navigation */}
