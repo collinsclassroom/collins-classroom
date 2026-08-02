@@ -48,21 +48,23 @@ async function loadIntroductionVideo() {
 }
 
 async function loadGalleryMedia() {
-  const { data } = await supabase
+  const { data, error } = await supabase
     .from("media")
     .select("*");
 
-  if (!data) return;
+  if (error) {
+    console.error(error);
+    return;
+  }
 
   const obj = {};
 
-  data.forEach((item) => {
+  (data || []).forEach((item) => {
     obj[item.media_key] = item;
   });
 
   setMedia(obj);
 }
-
 
   return (
     <>
