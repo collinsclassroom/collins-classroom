@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import siteConfig from "../config/siteConfig";
@@ -64,6 +65,26 @@ async function loadGalleryMedia() {
 
 
   return (
+    <>
+  <Helmet>
+    <title>About Collins Classroom | Professional English Learning</title>
+
+    <meta
+      name="description"
+      content="Learn about Collins Classroom, our mission, teaching experience, and commitment to helping students in Kazakhstan and around the world speak English confidently."
+    />
+
+    <meta
+      name="keywords"
+      content="About Collins Classroom, English teacher Kazakhstan, English education, Learn English Astana"
+    />
+
+    <link
+      rel="canonical"
+      href="https://collinsclassroom.online/about"
+    />
+  </Helmet>
+
     <MainLayout>
       {/* HERO */}
 
@@ -470,5 +491,6 @@ async function loadGalleryMedia() {
 
 </section>
           </MainLayout>
+          </>
   );
 }

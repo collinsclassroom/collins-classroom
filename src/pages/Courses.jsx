@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import Navbar from "../components/Navbar/Navbar";
 import Footer from "../components/Footer/Footer";
@@ -28,6 +29,26 @@ export default function Courses() {
   }
 
   return (
+    <>
+  <Helmet>
+    <title>English Courses | Collins Classroom Kazakhstan & Online</title>
+
+    <meta
+      name="description"
+      content="Browse Collins Classroom English courses including General English, IELTS preparation, Business English, grammar, pronunciation, and speaking classes for children and adults."
+    />
+
+    <meta
+      name="keywords"
+      content="English courses Kazakhstan, IELTS classes Astana, Business English, Online English course, Spoken English"
+    />
+
+    <link
+      rel="canonical"
+      href="https://collinsclassroom.online/courses"
+    />
+  </Helmet>
+
     <>
       <Navbar />
 
@@ -119,6 +140,7 @@ Thank you.`
       </section>
 
       <Footer />
+    </>
     </>
   );
 }
