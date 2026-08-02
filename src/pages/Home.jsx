@@ -1,3 +1,4 @@
+import { Helmet } from "react-helmet-async";
 import { useEffect, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import siteConfig from "../config/siteConfig";
@@ -96,6 +97,23 @@ useEffect(() => {
 
 
   return (
+    <>
+  <Helmet>
+    <title>Learn English in Kazakhstan & Online | Collins Classroom</title>
+
+    <meta
+      name="description"
+      content="Learn English with Collins Classroom. Professional English courses in Kazakhstan and online, including IELTS preparation, Business English, grammar, speaking, and conversational English."
+    />
+
+    <meta
+      name="keywords"
+      content="English classes Kazakhstan, English tutor Astana, Learn English online, IELTS preparation Kazakhstan, Business English, Collins Classroom"
+    />
+
+    <link rel="canonical" href="https://collinsclassroom.online/" />
+  </Helmet>
+  
     <MainLayout>
       <section className="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white min-h-[90vh] flex items-center">
 
@@ -272,5 +290,6 @@ useEffect(() => {
 </section>
 
     </MainLayout>
+    </>
   );
 }
