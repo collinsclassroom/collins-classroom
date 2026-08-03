@@ -212,28 +212,32 @@ async function saveStudent() {
 }
 
  async function loadPayments() {
-  const { data, error } = await supabase
+  // Load payments
+  const { data: payments, error } = await supabase
     .from("payments")
-    .select(`
-      id,
-      amount,
-      receipt_url,
-      status,
-      profiles!payments_student_id_fkey (
-        full_name,
-        email
-      )
-    `)
+    .select("*")
     .order("created_at", { ascending: false });
-
-  console.log("Payments:", data);
 
   if (error) {
     console.error(error);
     return;
   }
 
-  setPayments(data || []);
+  // Load profiles
+  const { data: profiles } = await supabase
+    .from("profiles")
+    .select("id, full_name, email");
+
+  const merged = payments.map(payment => ({
+    ...payment,
+    profile: profiles.find(
+      p => p.id === payment.student_id
+    )
+  }));
+
+  console.log(merged);
+
+  setPayments(merged);
 }
 
 async function loadStudents() {
@@ -592,7 +596,7 @@ async function deleteStudent(id) {
                               >
 
                                 <td className="py-5 font-semibold">
-  {payment.profiles?.full_name || "Unknown User"}
+  {payment.profile?.full_name || "Unknown User"}
 </td>
 
                                 <td>
