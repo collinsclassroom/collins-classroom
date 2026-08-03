@@ -219,10 +219,10 @@ async function saveStudent() {
       amount,
       receipt_url,
       status,
-      profiles(
-        full_name,
-        email
-      )
+      profiles!payments_student_id_fkey (
+  full_name,
+  email
+)
     `)
     .order("created_at", { ascending: false });
 
