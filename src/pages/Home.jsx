@@ -99,20 +99,45 @@ useEffect(() => {
   return (
     <>
   <Helmet>
-    <title>Learn English in Kazakhstan & Online | Collins Classroom</title>
+  <title>Learn English in Kazakhstan & Online | Collins Classroom</title>
 
-    <meta
-      name="description"
-      content="Learn English with Collins Classroom. Professional English courses in Kazakhstan and online, including IELTS preparation, Business English, grammar, speaking, and conversational English."
-    />
+  <meta
+    name="description"
+    content="Learn English with Collins Classroom. Professional English courses in Kazakhstan and online, including IELTS preparation, Business English, grammar, speaking, and conversational English."
+  />
 
-    <meta
-      name="keywords"
-      content="English classes Kazakhstan, English tutor Astana, Learn English online, IELTS preparation Kazakhstan, Business English, Collins Classroom"
-    />
+  <meta
+    name="keywords"
+    content="English classes Kazakhstan, English tutor Astana, Learn English online, IELTS preparation Kazakhstan, Business English, Collins Classroom"
+  />
 
-    <link rel="canonical" href="https://collinsclassroom.online/" />
-  </Helmet>
+  <link rel="canonical" href="https://collinsclassroom.online/" />
+
+  {/* Open Graph (Facebook, WhatsApp, LinkedIn) */}
+  <meta property="og:title" content="Collins Classroom" />
+  <meta
+    property="og:description"
+    content="Professional English lessons in Kazakhstan and online."
+  />
+  <meta
+    property="og:image"
+    content="https://collinsclassroom.online/logo/social-banner.jpg"
+  />
+  <meta property="og:url" content="https://collinsclassroom.online/" />
+  <meta property="og:type" content="website" />
+
+  {/* Twitter/X */}
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Collins Classroom" />
+  <meta
+    name="twitter:description"
+    content="Professional English lessons in Kazakhstan and online."
+  />
+  <meta
+    name="twitter:image"
+    content="https://collinsclassroom.online/logo/social-banner.jpg"
+  />
+</Helmet>
   
     <MainLayout>
       <section className="bg-gradient-to-br from-slate-950 via-blue-950 to-slate-900 text-white min-h-[90vh] flex items-center">
