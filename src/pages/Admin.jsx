@@ -220,16 +220,21 @@ async function saveStudent() {
       receipt_url,
       status,
       profiles!payments_student_id_fkey (
-  full_name,
-  email
-)
+        full_name,
+        email
+      )
     `)
     .order("created_at", { ascending: false });
+
+  console.log(data);
 
   if (error) {
     console.error(error);
     return;
   }
+
+  // your existing code continues here...
+}
 
   setPayments(data);
   console.log("Payments:", data);
