@@ -17,8 +17,8 @@ const [averageRating, setAverageRating] = useState(5);
 const [heroImage, setHeroImage] = useState(siteConfig.heroImage);
 
 useEffect(() => {
-  // loadReviews();
-  // loadHeroImage();
+  loadReviews();
+  loadHeroImage();
 }, []);
 
 async function loadReviews() {
