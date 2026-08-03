@@ -211,7 +211,7 @@ async function saveStudent() {
   alert("Student updated successfully.");
 }
 
-  async function loadPayments() {
+ async function loadPayments() {
   const { data, error } = await supabase
     .from("payments")
     .select(`
@@ -226,18 +226,14 @@ async function saveStudent() {
     `)
     .order("created_at", { ascending: false });
 
-  console.log(data);
+  console.log("Payments:", data);
 
   if (error) {
     console.error(error);
     return;
   }
 
-  // your existing code continues here...
-}
-
-  setPayments(data);
-  console.log("Payments:", data);
+  setPayments(data || []);
 }
 
 async function loadStudents() {
