@@ -50,28 +50,33 @@ export default function Register() {
 
     setLoading(true);
 
-    const { error } = await supabase.auth.signUp({
-      email,
-      password,
-      options: {
-        data: {
-          full_name: fullName,
-        },
-      },
-    });
+    const { data, error } = await supabase.auth.signUp({
+  email,
+  password,
+  options: {
+    data: {
+      full_name: fullName,
+    },
+  },
+});
 
-    setLoading(false);
+console.log("SIGNUP RESULT", { data, error });
 
-    if (error) {
-      alert(error.message);
-      return;
-    }
+setLoading(false);
 
-    alert("Account created successfully. Please check your email to verify your account.");
+if (error) {
+  alert(error.message);
+  return;
+}
 
-    navigate("/login");
+if (!data.user) {
+  alert("No user was created. Please try again.");
+  return;
+}
+
+alert("Account created successfully. Please check your email to verify your account.");
+navigate("/login");
   }
-
   const Rule = ({ ok, text }) => (
     <div className="flex items-center gap-2 text-sm">
       {ok ? (
