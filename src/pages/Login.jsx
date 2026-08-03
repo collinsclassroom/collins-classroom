@@ -2,7 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import MainLayout from "../layouts/MainLayout";
 import { supabase } from "../lib/supabase";
-import { FaEnvelope, FaLock, FaSignInAlt } from "react-icons/fa";
+import { FaEnvelope, FaLock, FaSignInAlt, FaEye, FaEyeSlash } from "react-icons/fa";
 
 export default function Login() {
   const navigate = useNavigate();
@@ -10,6 +10,8 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
+const [showPassword, setShowPassword] = useState(false);
+
 
   async function handleLogin(e) {
     e.preventDefault();
@@ -68,23 +70,31 @@ export default function Login() {
             </div>
 
             <div>
-              <label className="block font-semibold mb-2">
-                Password
-              </label>
+  <label className="block font-semibold mb-2">
+    Password
+  </label>
 
-              <div className="relative">
-                <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
+  <div className="relative">
+    <FaLock className="absolute left-4 top-1/2 -translate-y-1/2 text-slate-400" />
 
-                <input
-                  type="password"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                  placeholder="Enter your password"
-                  required
-                  className="w-full border border-slate-300 rounded-xl py-4 pl-12 pr-4 outline-none focus:border-blue-600"
-                />
-              </div>
-            </div>
+    <input
+      type={showPassword ? "text" : "password"}
+      value={password}
+      onChange={(e) => setPassword(e.target.value)}
+      placeholder="Enter your password"
+      required
+      className="w-full border border-slate-300 rounded-xl py-4 pl-12 pr-12 outline-none focus:border-blue-600"
+    />
+
+    <button
+      type="button"
+      onClick={() => setShowPassword(!showPassword)}
+      className="absolute right-4 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-700"
+    >
+      {showPassword ? <FaEyeSlash /> : <FaEye />}
+    </button>
+  </div>
+</div>
 
             <div className="flex justify-between items-center text-sm">
 
