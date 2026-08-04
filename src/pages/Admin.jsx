@@ -1055,15 +1055,15 @@ async function deleteStudent(id) {
     : "Approve"}
 </button>
 
-{payment.status === "Approved" && (
+
   <button
-    type="button"
-    onClick={() => downloadInvoice(payment)}
-    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm"
-  >
-    Invoice
-  </button>
-)}
+  type="button"
+  onClick={() => downloadInvoice(payment)}
+  className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm"
+>
+  Invoice
+</button>
+
 
     <button
   type="button"
