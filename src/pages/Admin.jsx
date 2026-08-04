@@ -7,6 +7,7 @@ import AdminMedia from "../components/admin/AdminMedia";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import logo from "/logo/logo.png";
+import signature from "/signature/signature.png";
 
 import {
   FaUsers,
@@ -115,6 +116,9 @@ function downloadInvoice(payment) {
   const img = new Image();
 img.src = logo;
 
+const signImg = new Image();
+signImg.src = signature;
+
   // Header
   doc.setFontSize(22);
  doc.setFillColor(18, 54, 94);
@@ -195,13 +199,20 @@ doc.setTextColor(0, 0, 0);
   doc.save(`Invoice-${invoiceNumber}.pdf`);
   doc.setFontSize(11);
 
-doc.text("Authorized by:", 20, y + 40);
-
-doc.setFont("helvetica", "bold");
-doc.text("Alachekam Chisom Collins", 20, y + 48);
+const signatureY = Math.min(y + 25, 235);
 
 doc.setFont("helvetica", "normal");
-doc.text("Founder & Lead Instructor", 20, y + 54);
+doc.setFontSize(11);
+doc.text("Authorized by:", 20, signatureY);
+
+doc.addImage(signImg, "PNG", 20, signatureY + 5, 45, 18);
+
+doc.setFont("helvetica", "bold");
+doc.text("Alachekam Chisom Collins", 20, signatureY + 30);
+
+doc.setFont("helvetica", "normal");
+doc.text("Founder & Lead Instructor", 20, signatureY + 36);
+
 }
 
 async function deletePayment(id) {
