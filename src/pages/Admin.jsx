@@ -4,6 +4,9 @@ import MainLayout from "../layouts/MainLayout";
 import { supabase } from "../lib/supabase";
 import AdminCourses from "../components/admin/AdminCourses";
 import AdminMedia from "../components/admin/AdminMedia";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
+
 
 import {
   FaUsers,
@@ -105,6 +108,75 @@ async function rejectPayment(id) {
 await loadDashboardStats();
 
   setProcessingPayment(null);
+}
+function downloadInvoice(payment) {
+  const doc = new jsPDF();
+
+  // Header
+  doc.setFontSize(22);
+  doc.text("COLLINS CLASSROOM", 20, 20);
+
+  doc.setFontSize(11);
+  doc.text("https://collinsclassroom.online", 20, 28);
+  doc.text("info@collinsclassroom.online", 20, 34);
+
+  // Invoice Info
+  doc.setFontSize(18);
+  doc.text("INVOICE", 150, 20);
+
+  const invoiceNumber =
+    "INV-" +
+    new Date().getTime();
+
+  doc.setFontSize(11);
+  doc.text(`Invoice #: ${invoiceNumber}`, 140, 30);
+  doc.text(
+    `Date: ${new Date().toLocaleDateString()}`,
+    140,
+    36
+  );
+
+  // Customer
+  doc.setFontSize(14);
+  doc.text("Bill To:", 20, 55);
+
+  doc.setFontSize(11);
+  doc.text(
+    payment.profiles?.full_name || "Student",
+    20,
+    63
+  );
+
+  doc.text(
+    payment.profiles?.email || "",
+    20,
+    69
+  );
+
+  // Table
+  autoTable(doc, {
+    startY: 80,
+    head: [["Description", "Qty", "Price"]],
+    body: [[
+      "English Course Payment",
+      "1",
+      `$${payment.amount}`
+    ]]
+  });
+
+  const y = doc.lastAutoTable.finalY + 15;
+
+  doc.setFontSize(13);
+  doc.text(`Total: $${payment.amount}`, 150, y);
+
+  doc.setFontSize(10);
+  doc.text(
+    "Thank you for choosing Collins Classroom.",
+    20,
+    y + 20
+  );
+
+  doc.save(`Invoice-${invoiceNumber}.pdf`);
 }
 
 async function deletePayment(id) {
@@ -982,6 +1054,16 @@ async function deleteStudent(id) {
     ? "Approving..."
     : "Approve"}
 </button>
+
+{payment.status === "Approved" && (
+  <button
+    type="button"
+    onClick={() => downloadInvoice(payment)}
+    className="bg-blue-600 hover:bg-blue-700 text-white px-3 py-1 rounded-lg text-sm"
+  >
+    Invoice
+  </button>
+)}
 
     <button
   type="button"
