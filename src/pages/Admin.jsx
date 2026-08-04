@@ -89,65 +89,49 @@ async function approvePayment(id) {
   }
 }
 
-async function rejectPayment(id) {
-  setProcessingPayment(id);
-
-  const { error } = await supabase
-    .from("payments")
-    .update({
-      status: "Rejected",
-    })
-    .eq("id", id);
-
-  if (error) {
-    alert(error.message);
-    setProcessingPayment(null);
-    return;
-  }
-
-  await loadPayments();
-await loadDashboardStats();
-
-  setProcessingPayment(null);
-}
 function downloadInvoice(payment) {
   const doc = new jsPDF();
 
+  // Images
   const img = new Image();
-img.src = logo;
+  img.src = logo;
 
-const signImg = new Image();
-signImg.src = signature;
+  const signImg = new Image();
+  signImg.src = signature;
 
-  // Header
+  // =========================
+  // HEADER
+  // =========================
+  doc.setFillColor(18, 54, 94);
+  doc.rect(0, 0, 210, 40, "F");
+
+  doc.addImage(img, "PNG", 12, 7, 22, 22);
+
+  doc.setTextColor(255, 255, 255);
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(22);
- doc.setFillColor(18, 54, 94);
-doc.rect(0, 0, 210, 40, "F");
+  doc.text("COLLINS CLASSROOM", 40, 18);
 
-doc.addImage(img, "PNG", 12, 7, 22, 22);
+  doc.setFontSize(10);
+  doc.text("Professional English Language Academy", 40, 26);
 
-doc.setTextColor(255, 255, 255);
-doc.setFont("helvetica", "bold");
-doc.setFontSize(22);
-doc.text("COLLINS CLASSROOM", 40, 18);
-
-doc.setFontSize(10);
-doc.text("Professional English Language Academy", 40, 26);
-
-doc.setTextColor(0, 0, 0);
-
+  doc.setTextColor(0, 0, 0);
+  doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
-  doc.text("https://collinsclassroom.online", 20, 28);
-  doc.text("info@collinsclassroom.online", 20, 34);
 
-  // Invoice Info
+  doc.text("https://collinsclassroom.online", 20, 32);
+  doc.text("info@collinsclassroom.online", 20, 38);
+
+  // =========================
+  // INVOICE DETAILS
+  // =========================
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(18);
   doc.text("INVOICE", 150, 20);
 
-  const invoiceNumber =
-    "INV-" +
-    new Date().getTime();
+  const invoiceNumber = "INV-" + Date.now();
 
+  doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
   doc.text(`Invoice #: ${invoiceNumber}`, 140, 30);
   doc.text(
@@ -156,11 +140,16 @@ doc.setTextColor(0, 0, 0);
     36
   );
 
-  // Customer
+  // =========================
+  // BILL TO
+  // =========================
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(14);
   doc.text("Bill To:", 20, 55);
 
+  doc.setFont("helvetica", "normal");
   doc.setFontSize(11);
+
   doc.text(
     payment.profiles?.full_name || "Student",
     20,
@@ -173,7 +162,9 @@ doc.setTextColor(0, 0, 0);
     69
   );
 
-  // Table
+  // =========================
+  // PAYMENT TABLE
+  // =========================
   autoTable(doc, {
     startY: 80,
     head: [["Description", "Qty", "Price"]],
@@ -184,11 +175,19 @@ doc.setTextColor(0, 0, 0);
     ]]
   });
 
+  // =========================
+  // TOTAL
+  // =========================
   const y = doc.lastAutoTable.finalY + 15;
 
-  doc.setFontSize(13);
+  doc.setFont("helvetica", "bold");
+  doc.setFontSize(14);
   doc.text(`Total: $${payment.amount}`, 150, y);
 
+  // =========================
+  // THANK YOU
+  // =========================
+  doc.setFont("helvetica", "normal");
   doc.setFontSize(10);
   doc.text(
     "Thank you for choosing Collins Classroom.",
@@ -196,24 +195,45 @@ doc.setTextColor(0, 0, 0);
     y + 20
   );
 
-  doc.save(`Invoice-${invoiceNumber}.pdf`);
+  // =========================
+  // AUTHORIZATION
+  // =========================
+  const signatureY = Math.min(y + 35, 220);
+
+  doc.setFont("helvetica", "bold");
   doc.setFontSize(11);
+  doc.text("Authorized by:", 20, signatureY);
 
-const signatureY = Math.min(y + 25, 235);
+  // Signature image
+  doc.addImage(
+    signImg,
+    "PNG",
+    20,
+    signatureY + 5,
+    45,
+    18
+  );
 
-doc.setFont("helvetica", "normal");
-doc.setFontSize(11);
-doc.text("Authorized by:", 20, signatureY);
+  doc.setFont("helvetica", "bold");
+  doc.text(
+    "Alachekam Chisom Collins",
+    20,
+    signatureY + 30
+  );
 
-doc.addImage(signImg, "PNG", 20, signatureY + 5, 45, 18);
+  doc.setFont("helvetica", "normal");
+  doc.text(
+    "Founder & Lead Instructor",
+    20,
+    signatureY + 36
+  );
 
-doc.setFont("helvetica", "bold");
-doc.text("Alachekam Chisom Collins", 20, signatureY + 30);
-
-doc.setFont("helvetica", "normal");
-doc.text("Founder & Lead Instructor", 20, signatureY + 36);
-
+  // =========================
+  // SAVE PDF
+  // =========================
+  doc.save(`Invoice-${invoiceNumber}.pdf`);
 }
+
 
 async function deletePayment(id) {
   if (!window.confirm("Delete this payment?")) return;
