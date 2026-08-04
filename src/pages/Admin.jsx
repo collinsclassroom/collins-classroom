@@ -6,7 +6,7 @@ import AdminCourses from "../components/admin/AdminCourses";
 import AdminMedia from "../components/admin/AdminMedia";
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
-
+import logo from "/logo/logo.png";
 
 import {
   FaUsers,
@@ -112,9 +112,25 @@ await loadDashboardStats();
 function downloadInvoice(payment) {
   const doc = new jsPDF();
 
+  const img = new Image();
+img.src = logo;
+
   // Header
   doc.setFontSize(22);
-  doc.text("COLLINS CLASSROOM", 20, 20);
+ doc.setFillColor(18, 54, 94);
+doc.rect(0, 0, 210, 40, "F");
+
+doc.addImage(img, "PNG", 12, 7, 22, 22);
+
+doc.setTextColor(255, 255, 255);
+doc.setFont("helvetica", "bold");
+doc.setFontSize(22);
+doc.text("COLLINS CLASSROOM", 40, 18);
+
+doc.setFontSize(10);
+doc.text("Professional English Language Academy", 40, 26);
+
+doc.setTextColor(0, 0, 0);
 
   doc.setFontSize(11);
   doc.text("https://collinsclassroom.online", 20, 28);
@@ -177,6 +193,15 @@ function downloadInvoice(payment) {
   );
 
   doc.save(`Invoice-${invoiceNumber}.pdf`);
+  doc.setFontSize(11);
+
+doc.text("Authorized by:", 20, y + 40);
+
+doc.setFont("helvetica", "bold");
+doc.text("Alachekam Chisom Collins", 20, y + 48);
+
+doc.setFont("helvetica", "normal");
+doc.text("Founder & Lead Instructor", 20, y + 54);
 }
 
 async function deletePayment(id) {
