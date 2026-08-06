@@ -345,10 +345,10 @@ return (
           <img
             src={managingDirector.photo_url}
             alt={managingDirector.name}
-            className="w-full h-56 object-cover"
+            className="w-full h-32 object-cover"
           />
 
-          <div className="p-6">
+          <div className="p-5">
 
   <p className="uppercase tracking-[0.3em] text-blue-600">
     Managing Director
@@ -404,7 +404,6 @@ return (
 {/* ================= TEACHERS ================= */}
 
 <section className="bg-slate-100 py-20">
-
   <div className="max-w-7xl mx-auto px-6">
 
     <h2 className="text-4xl font-black text-center">
@@ -416,61 +415,50 @@ return (
     </p>
 
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
       {teachers.map((teacher) => (
-
         <div
           key={teacher.id}
           className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition"
         >
-
           <img
             src={teacher.photo_url}
             alt={teacher.name}
-            className="w-full h-52 object-cover"
+            className="w-full h-40 object-cover"
           />
 
           <div className="p-5">
-
-  <h3 className="text-2xl font-bold">
-    {teacher.name}
-  </h3>
+            <h3 className="text-2xl font-bold">
+              {teacher.name}
+            </h3>
 
             <p className="text-blue-600 font-semibold mt-1">
               {teacher.position}
             </p>
 
-            <div className="mt-5 space-y-2 text-slate-700">
-
+            <div className="mt-4 space-y-2 text-slate-700">
               <p>✔ {teacher.qualification}</p>
-
               <p>✔ {teacher.experience}</p>
-
               <p>✔ {teacher.specialization}</p>
-
             </div>
 
-            <p className="mt-6 text-slate-600 leading-7 line-clamp-4">
-    {teacher.biography}
-</p>
+            <p className="mt-5 text-slate-600 leading-7 line-clamp-3">
+              {teacher.biography}
+            </p>
 
-<button
-    className="mt-4 text-blue-600 font-semibold"
->
-    Read More →
-</button>
-
+            <button
+              type="button"
+              className="mt-4 text-blue-600 font-semibold hover:text-blue-800 transition"
+            >
+              Read More →
+            </button>
           </div>
-
         </div>
-
       ))}
-
     </div>
 
   </div>
-
 </section>
+
 
       {/* ================= REVIEWS ================= */}
 
