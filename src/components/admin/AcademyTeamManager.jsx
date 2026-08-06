@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  loadTeam,
+  getTeamMembers,
   updateMember,
+  uploadMemberPhoto,
 } from "../../utils/teamStorage";
 
 export default function AcademyTeamManager() {
@@ -14,7 +15,7 @@ export default function AcademyTeamManager() {
 
   async function fetchTeam() {
     try {
-      const data = await loadTeam();
+      const data = await getTeamMembers();
       setTeam(data);
     } catch (err) {
       alert(err.message);
@@ -41,8 +42,31 @@ export default function AcademyTeamManager() {
       )
     );
   }
+async function handlePhotoUpload(id, file) {
+  if (!file) return;
 
+  try {
+    const photoUrl = await uploadMemberPhoto(
+      file,
+      file.name
+    );
+
+    await updateMember(id, {
+      photo_url: photoUrl,
+    });
+
+    const updatedTeam = await getTeamMembers();
+
+    setTeam(updatedTeam);
+
+    alert("Photo uploaded successfully.");
+
+  } catch (err) {
+    alert(err.message);
+  }
+}
   if (loading) {
+
     return (
       <div className="text-center py-20">
         Loading Academy Team...
@@ -72,31 +96,34 @@ export default function AcademyTeamManager() {
 
 <div className="lg:col-span-2">
 
-  <label className="font-semibold">
-    Photo URL
-  </label>
+  <div className="lg:col-span-2">
 
-  <input
-    type="text"
-    value={member.photo_url || ""}
-    onChange={(e) =>
-      handleChange(
-        member.id,
-        "photo_url",
-        e.target.value
-      )
-    }
-    placeholder="Paste the public image URL here"
-    className="w-full border rounded-xl p-3 mt-2"
-  />
+  <label className="font-semibold">
+    Team Photo
+  </label>
 
   {member.photo_url && (
     <img
       src={member.photo_url}
       alt={member.name}
-      className="w-40 h-40 object-cover rounded-2xl mt-4 border"
+      className="w-40 h-40 object-cover rounded-2xl border mt-3 mb-4"
     />
   )}
+
+  <input
+    type="file"
+    accept="image/*"
+    onChange={(e) =>
+      handlePhotoUpload(member.id, e.target.files[0])
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+  <p className="text-sm text-slate-500 mt-2">
+    Upload a Founder, Managing Director or Teacher photo.
+  </p>
+
+</div>
 
 </div>
             <div>
