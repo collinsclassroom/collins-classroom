@@ -58,7 +58,7 @@ async function handlePhotoUpload(id, file) {
 
     console.log("Database Update:", result);
 
-    const updatedTeam = await getTeamMembers();
+    const updatedTeam = await loadTeam();
     setTeam(updatedTeam);
 
     alert("Photo uploaded successfully.");

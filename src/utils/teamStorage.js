@@ -20,14 +20,16 @@ export async function loadTeam() {
 ========================= */
 
 export async function updateMember(id, updates) {
+  console.log("Updating:", id);
+  console.log("Updates:", updates);
+
   const { data, error } = await supabase
     .from("academy_team")
     .update(updates)
     .eq("id", id)
-    .select();
+    .select("*");
 
-  console.log("UPDATE DATA:", data);
-  console.log("UPDATE ERROR:", error);
+  console.log("Returned Row:", data);
 
   if (error) throw error;
 
