@@ -285,20 +285,20 @@ return (
         <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden">
 
           <img
-            src={founder.photo_url}
-            alt={founder.name}
-            className="w-full h-30 object-cover"
-          />
+  src={founder.photo_url}
+  alt={founder.name}
+  className="w-full h-80 object-contain bg-gray-100"
+/>
 
-          <div className="p-4">
+            <div className="p-4">
 
-            <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
-              Founder
-            </p>
+  <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
+    Founder
+  </p>
 
-            <h3 className="text-3xl font-black mt-3">
-              {founder.name}
-            </h3>
+  <h3 className="text-3xl font-black mt-3">
+    {founder.name}
+  </h3>
 
             <div className="mt-6 space-y-3">
 
@@ -396,7 +396,7 @@ return (
 
       )}
 
-    </div>
+        </div>
 
   </div>
 
