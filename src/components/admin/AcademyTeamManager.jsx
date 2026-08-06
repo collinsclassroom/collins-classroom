@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import {
-  getTeamMembers,
+  loadTeam,
   updateMember,
   uploadMemberPhoto,
 } from "../../utils/teamStorage";
@@ -15,7 +15,7 @@ export default function AcademyTeamManager() {
 
   async function fetchTeam() {
     try {
-      const data = await getTeamMembers();
+      const data = await loadTeam();
       setTeam(data);
     } catch (err) {
       alert(err.message);
@@ -77,9 +77,9 @@ async function handlePhotoUpload(id, file) {
   return (
     <div className="space-y-10">
 
-      <h2 className="text-3xl font-black">
-        Academy Team Management
-      </h2>
+      <h2 className="text-3xl font-black text-red-600">
+  TEST VERSION 2
+</h2>
 
       {team.map((member) => (
 
