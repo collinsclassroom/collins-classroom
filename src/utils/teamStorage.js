@@ -24,8 +24,10 @@ export async function updateMember(id, updates) {
     .from("academy_team")
     .update(updates)
     .eq("id", id)
-    .select()
-    .single();
+    .select();
+
+  console.log("UPDATE DATA:", data);
+  console.log("UPDATE ERROR:", error);
 
   if (error) throw error;
 

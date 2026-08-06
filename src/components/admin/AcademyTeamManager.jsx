@@ -46,24 +46,27 @@ async function handlePhotoUpload(id, file) {
   if (!file) return;
 
   try {
-    const photoUrl = await uploadMemberPhoto(
-      file,
-      file.name
-    );
+    console.log("Member ID:", id);
 
-    await updateMember(id, {
+    const photoUrl = await uploadMemberPhoto(file, file.name);
+
+    console.log("Photo URL:", photoUrl);
+
+    const result = await updateMember(id, {
       photo_url: photoUrl,
     });
 
-    const updatedTeam = await getTeamMembers();
+    console.log("Database Update:", result);
 
+    const updatedTeam = await getTeamMembers();
     setTeam(updatedTeam);
 
     alert("Photo uploaded successfully.");
-
   } catch (err) {
-    alert(err.message);
-  }
+  console.error(err);
+  console.log(JSON.stringify(err, null, 2));
+  alert(JSON.stringify(err, null, 2));
+}
 }
   if (loading) {
 
