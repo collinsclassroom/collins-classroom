@@ -11,7 +11,6 @@ import { supabase } from "../../lib/supabase";
   { id: "media", label: "🖼 Media" },
 
   { id: "team", label: "👥 Academy Team" },
-
 ];
 
 export default function Sidebar({ active, setActive }) {
