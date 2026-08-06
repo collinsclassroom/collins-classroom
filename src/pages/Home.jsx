@@ -284,11 +284,13 @@ return (
 
         <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden">
 
-          <img
-  src={founder.photo_url}
-  alt={founder.name}
-  className="w-full h-80 object-contain bg-gray-100"
-/>
+          <div className="w-full h-[500px] bg-gray-100 flex items-center justify-center overflow-hidden">
+  <img
+    src={founder.photo_url}
+    alt={founder.name}
+    className="h-full w-auto object-contain"
+  />
+</div>
 
             <div className="p-4">
 
