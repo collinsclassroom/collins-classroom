@@ -345,14 +345,14 @@ return (
           <img
             src={managingDirector.photo_url}
             alt={managingDirector.name}
-            className="w-full h-80 object-cover"
+            className="w-full h-56 object-cover"
           />
 
-          <div className="p-8">
+          <div className="p-6">
 
-            <p className="uppercase tracking-[0.3em] text-blue-600 font-bold">
-              Managing Director
-            </p>
+  <p className="uppercase tracking-[0.3em] text-blue-600">
+    Managing Director
+  </p>
 
             <h3 className="text-3xl font-black mt-3">
               {managingDirector.name}
@@ -427,14 +427,14 @@ return (
           <img
             src={teacher.photo_url}
             alt={teacher.name}
-            className="w-full h-72 object-cover"
+            className="w-full h-52 object-cover"
           />
 
-          <div className="p-6">
+          <div className="p-5">
 
-            <h3 className="text-2xl font-bold">
-              {teacher.name}
-            </h3>
+  <h3 className="text-2xl font-bold">
+    {teacher.name}
+  </h3>
 
             <p className="text-blue-600 font-semibold mt-1">
               {teacher.position}
