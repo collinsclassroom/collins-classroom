@@ -402,6 +402,85 @@ return (
 
 </section>
 
+{/* ================= TEACHERS ================= */}
+
+<section className="bg-slate-100 py-20">
+  <div className="max-w-7xl mx-auto px-6">
+
+    <h2 className="text-4xl font-black text-center">
+      Our Lead Teachers
+    </h2>
+
+    <p className="text-center text-slate-600 mt-3 mb-14">
+      Meet our experienced English language educators.
+    </p>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      {teachers.map((teacher) => (
+        <div
+          key={teacher.id}
+          className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition"
+        >
+
+          <img
+            src={teacher.photo_url}
+            alt={teacher.name}
+            className="w-full h-40 object-cover"
+          />
+
+          <div className="p-5">
+
+            <h3 className="text-2xl font-bold">
+              {teacher.name}
+            </h3>
+
+            <p className="text-blue-600 font-semibold mt-1">
+              {teacher.position}
+            </p>
+
+            <div className="mt-4 space-y-2 text-slate-700">
+              <p>✔ {teacher.qualification}</p>
+              <p>✔ {teacher.experience}</p>
+              <p>✔ {teacher.specialization}</p>
+            </div>
+
+            <p
+              className={`mt-5 text-slate-600 leading-7 ${
+                expandedTeacher === teacher.id
+                  ? ""
+                  : "line-clamp-3"
+              }`}
+            >
+              {teacher.biography}
+            </p>
+
+            <button
+              onClick={() =>
+                setExpandedTeacher(
+                  expandedTeacher === teacher.id
+                    ? null
+                    : teacher.id
+                )
+              }
+              className="mt-4 text-blue-600 font-semibold hover:underline"
+            >
+              {expandedTeacher === teacher.id
+                ? "Read Less"
+                : "Read More"}
+            </button>
+
+          </div>
+
+        </div>
+      ))}
+
+    </div>
+
+  </div>
+</section>
+
+
       {/* ================= REVIEWS ================= */}
 
 <section className="bg-slate-100 py-20">
