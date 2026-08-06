@@ -345,10 +345,10 @@ return (
           <div className="flex gap-5 items-start">
 
             <img
-              src={managingDirector.photo_url}
-              alt={managingDirector.name}
-              className="w-36 h-48 rounded-xl object-cover shadow-md flex-shrink-0"
-            />
+  src={managingDirector.photo_url}
+  alt={managingDirector.name}
+  className="w-36 h-52 rounded-xl object-cover object-top shadow-md flex-shrink-0"
+/>
 
             <div className="flex-1">
 
