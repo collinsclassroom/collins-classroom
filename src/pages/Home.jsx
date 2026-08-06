@@ -282,60 +282,52 @@ return (
 
       {founder && (
 
-        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden max-w-[520px] mx-auto">
+       <div className="bg-slate-50 rounded-3xl shadow-xl p-6 flex gap-6 items-start">
 
-          <div className="w-full bg-gray-100">
   <img
     src={founder.photo_url}
     alt={founder.name}
-    className="w-full h-auto block"
+    className="w-48 h-60 rounded-2xl object-cover shadow-md flex-shrink-0"
   />
+
+  <div className="flex-1">
+
+    <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
+      Founder
+    </p>
+
+    <h3 className="text-3xl font-black mt-3">
+      {founder.name}
+    </h3>
+
+    <div className="mt-6 space-y-3">
+      <p>✔ {founder.qualification}</p>
+      <p>✔ {founder.experience}</p>
+      <p>✔ {founder.specialization}</p>
+    </div>
+
+    <h4 className="font-bold text-lg mt-8 mb-3">
+      Biography
+    </h4>
+
+    <p
+      className={`leading-8 text-slate-700 ${
+        expandedFounder ? "" : "line-clamp-5"
+      }`}
+    >
+      {founder.biography}
+    </p>
+
+    <button
+      onClick={() => setExpandedFounder(!expandedFounder)}
+      className="mt-4 text-blue-600 font-semibold hover:underline"
+    >
+      {expandedFounder ? "Read Less" : "Read More"}
+    </button>
+
+  </div>
+
 </div>
-
-            <div className="p-4">
-
-  <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
-    Founder
-  </p>
-
-  <h3 className="text-3xl font-black mt-3">
-    {founder.name}
-  </h3>
-
-            <div className="mt-6 space-y-3">
-
-              <p>✔ {founder.qualification}</p>
-
-              <p>✔ {founder.experience}</p>
-
-              <p>✔ {founder.specialization}</p>
-
-            </div>
-
-            <h4 className="font-bold text-lg mt-8 mb-3">
-  Biography
-</h4>
-
-<p
-  className={`leading-8 text-slate-700 ${
-    expandedFounder ? "" : "line-clamp-5"
-  }`}
->
-  {founder.biography}
-</p>
-
-<button
-  onClick={() =>
-    setExpandedFounder(!expandedFounder)
-  }
-  className="mt-4 text-blue-600 font-semibold hover:underline"
->
-  {expandedFounder ? "Read Less" : "Read More"}
-</button>
-
-          </div>
-
-        </div>
 
       )}
 
