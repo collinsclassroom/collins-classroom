@@ -263,7 +263,7 @@ return (
 
       </section>
 
-      {/* ================= FOUNDER ================= */}
+      {/* ================= EXECUTIVE LEADERSHIP ================= */}
 
 <section className="bg-white py-20">
 
@@ -273,47 +273,41 @@ return (
       Meet Our Leadership
     </h2>
 
-    {founder && (
+    <div className="grid lg:grid-cols-2 gap-10">
 
-      <div className="grid lg:grid-cols-2 gap-12 items-center bg-slate-50 rounded-3xl shadow-xl p-10">
+      {/* Founder */}
 
-        <div className="flex justify-center">
+      {founder && (
+
+        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden">
 
           <img
             src={founder.photo_url}
             alt={founder.name}
-            className="w-80 h-96 object-cover rounded-3xl shadow-xl"
+            className="w-full h-80 object-cover"
           />
 
-        </div>
+          <div className="p-8">
 
-        <div>
+            <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
+              Founder
+            </p>
 
-          <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
-            Founder
-          </p>
+            <h3 className="text-3xl font-black mt-3">
+              {founder.name}
+            </h3>
 
-          <h3 className="text-4xl font-black mt-3">
-            {founder.name}
-          </h3>
+            <div className="mt-6 space-y-3">
 
-          <p className="text-xl text-blue-700 font-semibold mt-2">
-            {founder.position}
-          </p>
+              <p>✔ {founder.qualification}</p>
 
-          <div className="mt-8 space-y-3">
+              <p>✔ {founder.experience}</p>
 
-            <p>✔ {founder.qualification}</p>
+              <p>✔ {founder.specialization}</p>
 
-            <p>✔ {founder.experience}</p>
+            </div>
 
-            <p>✔ {founder.specialization}</p>
-
-          </div>
-
-          <div className="mt-8">
-
-            <h4 className="font-bold text-lg mb-3">
+            <h4 className="font-bold text-lg mt-8 mb-3">
               Biography
             </h4>
 
@@ -325,9 +319,120 @@ return (
 
         </div>
 
-      </div>
+      )}
 
-    )}
+      {/* Managing Director */}
+
+      {managingDirector && (
+
+        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden">
+
+          <img
+            src={managingDirector.photo_url}
+            alt={managingDirector.name}
+            className="w-full h-80 object-cover"
+          />
+
+          <div className="p-8">
+
+            <p className="uppercase tracking-[0.3em] text-blue-600 font-bold">
+              Managing Director
+            </p>
+
+            <h3 className="text-3xl font-black mt-3">
+              {managingDirector.name}
+            </h3>
+
+            <div className="mt-6 space-y-3">
+
+              <p>✔ {managingDirector.qualification}</p>
+
+              <p>✔ {managingDirector.experience}</p>
+
+              <p>✔ {managingDirector.specialization}</p>
+
+            </div>
+
+            <h4 className="font-bold text-lg mt-8 mb-3">
+              Biography
+            </h4>
+
+            <p className="leading-8 text-slate-700">
+              {managingDirector.biography}
+            </p>
+
+          </div>
+
+        </div>
+
+      )}
+
+    </div>
+
+  </div>
+
+</section>
+
+{/* ================= TEACHERS ================= */}
+
+<section className="bg-slate-100 py-20">
+
+  <div className="max-w-7xl mx-auto px-6">
+
+    <h2 className="text-4xl font-black text-center">
+      Our Teachers
+    </h2>
+
+    <p className="text-center text-slate-600 mt-3 mb-14">
+      Meet our experienced English language educators.
+    </p>
+
+    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+      {teachers.map((teacher) => (
+
+        <div
+          key={teacher.id}
+          className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition"
+        >
+
+          <img
+            src={teacher.photo_url}
+            alt={teacher.name}
+            className="w-full h-72 object-cover"
+          />
+
+          <div className="p-6">
+
+            <h3 className="text-2xl font-bold">
+              {teacher.name}
+            </h3>
+
+            <p className="text-blue-600 font-semibold mt-1">
+              {teacher.position}
+            </p>
+
+            <div className="mt-5 space-y-2 text-slate-700">
+
+              <p>✔ {teacher.qualification}</p>
+
+              <p>✔ {teacher.experience}</p>
+
+              <p>✔ {teacher.specialization}</p>
+
+            </div>
+
+            <p className="mt-6 text-slate-600 leading-7 line-clamp-5">
+              {teacher.biography}
+            </p>
+
+          </div>
+
+        </div>
+
+      ))}
+
+    </div>
 
   </div>
 
