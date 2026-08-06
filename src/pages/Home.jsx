@@ -273,7 +273,7 @@ return (
   <div className="max-w-7xl mx-auto px-6">
 
     <h2 className="text-4xl font-black text-center mb-14">
-      Meet Our Leadership
+      Meet Our Leaders
     </h2>
 
     <div className="grid lg:grid-cols-2 gap-8">
