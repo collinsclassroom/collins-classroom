@@ -15,10 +15,12 @@ export default function Home() {
 const [visibleReviews, setVisibleReviews] = useState([]);
 const [averageRating, setAverageRating] = useState(5);
 const [heroImage, setHeroImage] = useState(siteConfig.heroImage);
+const [academyTeam, setAcademyTeam] = useState([]);
 
 useEffect(() => {
+  loadCourses();
   loadReviews();
-  loadHeroImage();
+  loadAcademyTeam();
 }, []);
 
 async function loadReviews() {
@@ -95,8 +97,35 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, [reviews]);
 
+async function loadAcademyTeam() {
+  const { data, error } = await supabase
+    .from("academy_team")
+    .select("*")
+    .eq("active", true)
+    .order("display_order", { ascending: true });
 
-  return (
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  setAcademyTeam(data || []);
+}
+
+const founder = academyTeam.find(
+  member => member.role === "founder"
+);
+
+const managingDirector = academyTeam.find(
+  member => member.role === "managing_director"
+);
+
+const teachers = academyTeam.filter(
+  member => member.role === "teacher"
+);
+
+return (
+
     <>
   <Helmet>
   <title>Learn English in Kazakhstan & Online | Collins Classroom</title>
@@ -233,6 +262,76 @@ useEffect(() => {
         </div>
 
       </section>
+
+      {/* ================= FOUNDER ================= */}
+
+<section className="bg-white py-20">
+
+  <div className="max-w-7xl mx-auto px-6">
+
+    <h2 className="text-4xl font-black text-center mb-14">
+      Meet Our Leadership
+    </h2>
+
+    {founder && (
+
+      <div className="grid lg:grid-cols-2 gap-12 items-center bg-slate-50 rounded-3xl shadow-xl p-10">
+
+        <div className="flex justify-center">
+
+          <img
+            src={founder.photo_url}
+            alt={founder.name}
+            className="w-80 h-96 object-cover rounded-3xl shadow-xl"
+          />
+
+        </div>
+
+        <div>
+
+          <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
+            Founder
+          </p>
+
+          <h3 className="text-4xl font-black mt-3">
+            {founder.name}
+          </h3>
+
+          <p className="text-xl text-blue-700 font-semibold mt-2">
+            {founder.position}
+          </p>
+
+          <div className="mt-8 space-y-3">
+
+            <p>✔ {founder.qualification}</p>
+
+            <p>✔ {founder.experience}</p>
+
+            <p>✔ {founder.specialization}</p>
+
+          </div>
+
+          <div className="mt-8">
+
+            <h4 className="font-bold text-lg mb-3">
+              Biography
+            </h4>
+
+            <p className="leading-8 text-slate-700">
+              {founder.biography}
+            </p>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    )}
+
+  </div>
+
+</section>
 
       {/* ================= REVIEWS ================= */}
 
