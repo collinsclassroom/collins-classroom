@@ -16,6 +16,8 @@ const [visibleReviews, setVisibleReviews] = useState([]);
 const [averageRating, setAverageRating] = useState(5);
 const [heroImage, setHeroImage] = useState(siteConfig.heroImage);
 const [academyTeam, setAcademyTeam] = useState([]);
+const [expandedFounder, setExpandedFounder] = useState(false);
+const [expandedDirector, setExpandedDirector] = useState(false);
 
 useEffect(() => {
   loadReviews();
@@ -308,12 +310,25 @@ return (
             </div>
 
             <h4 className="font-bold text-lg mt-8 mb-3">
-              Biography
-            </h4>
+  Biography
+</h4>
 
-            <p className="leading-8 text-slate-700">
-              {founder.biography}
-            </p>
+<p
+  className={`leading-8 text-slate-700 ${
+    expandedFounder ? "" : "line-clamp-5"
+  }`}
+>
+  {founder.biography}
+</p>
+
+<button
+  onClick={() =>
+    setExpandedFounder(!expandedFounder)
+  }
+  className="mt-4 text-blue-600 font-semibold hover:underline"
+>
+  {expandedFounder ? "Read Less" : "Read More"}
+</button>
 
           </div>
 
@@ -354,12 +369,25 @@ return (
             </div>
 
             <h4 className="font-bold text-lg mt-8 mb-3">
-              Biography
-            </h4>
+  Biography
+</h4>
 
-            <p className="leading-8 text-slate-700">
-              {managingDirector.biography}
-            </p>
+<p
+  className={`leading-8 text-slate-700 ${
+    expandedDirector ? "" : "line-clamp-5"
+  }`}
+>
+  {managingDirector.biography}
+</p>
+
+<button
+  onClick={() =>
+    setExpandedDirector(!expandedDirector)
+  }
+  className="mt-4 text-blue-600 font-semibold hover:underline"
+>
+  {expandedDirector ? "Read Less" : "Read More"}
+</button>
 
           </div>
 
@@ -422,9 +450,15 @@ return (
 
             </div>
 
-            <p className="mt-6 text-slate-600 leading-7 line-clamp-5">
-              {teacher.biography}
-            </p>
+            <p className="mt-6 text-slate-600 leading-7 line-clamp-4">
+    {teacher.biography}
+</p>
+
+<button
+    className="mt-4 text-blue-600 font-semibold"
+>
+    Read More →
+</button>
 
           </div>
 
