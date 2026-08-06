@@ -282,13 +282,13 @@ return (
 
       {founder && (
 
-        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden max-w-[520px] mx-auto">
 
-          <div className="w-full h-[500px] bg-gray-100 flex items-center justify-center overflow-hidden">
+          <div className="w-full bg-gray-100">
   <img
     src={founder.photo_url}
     alt={founder.name}
-    className="h-full w-auto object-contain"
+    className="w-full h-auto block"
   />
 </div>
 
@@ -343,13 +343,15 @@ return (
 
       {managingDirector && (
 
-        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden">
+        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden max-w-[520px] mx-auto">
 
-          <img
-            src={managingDirector.photo_url}
-            alt={managingDirector.name}
-            className="w-full h-30 object-cover"
-          />
+          <div className="w-full bg-gray-100">
+  <img
+    src={managingDirector.photo_url}
+    alt={managingDirector.name}
+    className="w-full h-auto block"
+  />
+</div>
 
           <div className="p-4">
 
