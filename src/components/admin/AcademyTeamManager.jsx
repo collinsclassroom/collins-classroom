@@ -80,10 +80,6 @@ async function handlePhotoUpload(id, file) {
   return (
     <div className="space-y-10">
 
-      <h2 className="text-3xl font-black text-red-600">
-  TEST VERSION 2
-</h2>
-
       {team.map((member) => (
 
         <div
