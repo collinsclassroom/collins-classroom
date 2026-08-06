@@ -419,19 +419,19 @@ return (
 
       {teachers.map((teacher) => (
         <div
-          key={teacher.id}
-          className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition"
-        >
+  key={teacher.id}
+  className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition p-4"
+>
 
           <img
-            src={teacher.photo_url}
-            alt={teacher.name}
-            className="w-full h-40 object-cover"
-          />
+  src={teacher.photo_url}
+  alt={teacher.name}
+  className="w-28 h-36 rounded-xl object-cover object-top shadow-md mb-4"
+/>
 
           <div className="p-5">
 
-            <h3 className="text-2xl font-bold">
+            <h3 className="text-xl font-bold">
               {teacher.name}
             </h3>
 
@@ -439,7 +439,7 @@ return (
               {teacher.position}
             </p>
 
-            <div className="mt-4 space-y-2 text-slate-700">
+            <div className="mt-3 space-y-1 text-sm text-slate-700">
               <p>✔ {teacher.qualification}</p>
               <p>✔ {teacher.experience}</p>
               <p>✔ {teacher.specialization}</p>
