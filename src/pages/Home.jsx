@@ -276,206 +276,131 @@ return (
       Meet Our Leadership
     </h2>
 
-    <div className="grid lg:grid-cols-2 gap-10">
+    <div className="grid lg:grid-cols-2 gap-8">
 
       {/* Founder */}
 
       {founder && (
+        <div className="bg-slate-50 rounded-3xl shadow-lg p-5">
 
-       <div className="bg-slate-50 rounded-3xl shadow-xl p-6 flex gap-6 items-start">
+          <div className="flex gap-5 items-start">
 
-  <img
-    src={founder.photo_url}
-    alt={founder.name}
-    className="w-48 h-60 rounded-2xl object-cover shadow-md flex-shrink-0"
-  />
+            <img
+              src={founder.photo_url}
+              alt={founder.name}
+              className="w-36 h-48 rounded-xl object-cover shadow-md flex-shrink-0"
+            />
 
-  <div className="flex-1">
+            <div className="flex-1">
 
-    <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold">
-      Founder
-    </p>
+              <p className="uppercase tracking-[0.3em] text-yellow-500 font-bold text-sm">
+                Founder
+              </p>
 
-    <h3 className="text-3xl font-black mt-3">
-      {founder.name}
-    </h3>
+              <h3 className="text-2xl font-bold mt-2">
+                {founder.name}
+              </h3>
 
-    <div className="mt-6 space-y-3">
-      <p>✔ {founder.qualification}</p>
-      <p>✔ {founder.experience}</p>
-      <p>✔ {founder.specialization}</p>
-    </div>
-
-    <h4 className="font-bold text-lg mt-8 mb-3">
-      Biography
-    </h4>
-
-    <p
-      className={`leading-8 text-slate-700 ${
-        expandedFounder ? "" : "line-clamp-5"
-      }`}
-    >
-      {founder.biography}
-    </p>
-
-    <button
-      onClick={() => setExpandedFounder(!expandedFounder)}
-      className="mt-4 text-blue-600 font-semibold hover:underline"
-    >
-      {expandedFounder ? "Read Less" : "Read More"}
-    </button>
-
-  </div>
-
-</div>
-
-      )}
-
-      {/* Managing Director */}
-
-      {managingDirector && (
-
-        <div className="bg-slate-50 rounded-3xl shadow-xl overflow-hidden max-w-[520px] mx-auto">
-
-          <div className="w-full bg-gray-100">
-  <img
-    src={managingDirector.photo_url}
-    alt={managingDirector.name}
-    className="w-full h-auto block"
-  />
-</div>
-
-          <div className="p-4">
-
-  <p className="uppercase tracking-[0.3em] text-blue-600">
-    Managing Director
-  </p>
-
-            <h3 className="text-3xl font-black mt-3">
-              {managingDirector.name}
-            </h3>
-
-            <div className="mt-6 space-y-3">
-
-              <p>✔ {managingDirector.qualification}</p>
-
-              <p>✔ {managingDirector.experience}</p>
-
-              <p>✔ {managingDirector.specialization}</p>
+              <div className="mt-4 space-y-2 text-slate-700 text-sm">
+                <p>✔ {founder.qualification}</p>
+                <p>✔ {founder.experience}</p>
+                <p>✔ {founder.specialization}</p>
+              </div>
 
             </div>
-
-            <h4 className="font-bold text-lg mt-8 mb-3">
-  Biography
-</h4>
-
-<p
-  className={`leading-8 text-slate-700 ${
-    expandedDirector ? "" : "line-clamp-5"
-  }`}
->
-  {managingDirector.biography}
-</p>
-
-<button
-  onClick={() =>
-    setExpandedDirector(!expandedDirector)
-  }
-  className="mt-4 text-blue-600 font-semibold hover:underline"
->
-  {expandedDirector ? "Read Less" : "Read More"}
-</button>
 
           </div>
 
-        </div>
+          <div className="mt-5">
 
-      )}
-
-        </div>
-
-  </div>
-
-</section>
-
-{/* ================= TEACHERS ================= */}
-
-<section className="bg-slate-100 py-20">
-  <div className="max-w-7xl mx-auto px-6">
-
-    <h2 className="text-4xl font-black text-center">
-      Our Lead Teachers
-    </h2>
-
-    <p className="text-center text-slate-600 mt-3 mb-14">
-      Meet our experienced English language educators.
-    </p>
-
-    <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-
-      {teachers.map((teacher) => (
-        <div
-          key={teacher.id}
-          className="bg-white rounded-3xl shadow-lg overflow-hidden hover:shadow-2xl transition"
-        >
-
-          <img
-            src={teacher.photo_url}
-            alt={teacher.name}
-            className="w-full h-40 object-cover"
-          />
-
-          <div className="p-5">
-
-            <h3 className="text-2xl font-bold">
-              {teacher.name}
-            </h3>
-
-            <p className="text-blue-600 font-semibold mt-1">
-              {teacher.position}
-            </p>
-
-            <div className="mt-4 space-y-2 text-slate-700">
-              <p>✔ {teacher.qualification}</p>
-              <p>✔ {teacher.experience}</p>
-              <p>✔ {teacher.specialization}</p>
-            </div>
+            <h4 className="font-bold text-lg mb-2">
+              Biography
+            </h4>
 
             <p
-              className={`mt-5 text-slate-600 leading-7 ${
-                expandedTeacher === teacher.id
-                  ? ""
-                  : "line-clamp-3"
+              className={`leading-7 text-slate-700 ${
+                expandedFounder ? "" : "line-clamp-3"
               }`}
             >
-              {teacher.biography}
+              {founder.biography}
             </p>
 
             <button
-              onClick={() =>
-                setExpandedTeacher(
-                  expandedTeacher === teacher.id
-                    ? null
-                    : teacher.id
-                )
-              }
-              className="mt-4 text-blue-600 font-semibold hover:underline"
+              onClick={() => setExpandedFounder(!expandedFounder)}
+              className="mt-3 text-blue-600 font-semibold hover:underline"
             >
-              {expandedTeacher === teacher.id
-                ? "Read Less"
-                : "Read More"}
+              {expandedFounder ? "Read Less" : "Read More"}
             </button>
 
           </div>
 
         </div>
-      ))}
+      )}
+
+      {/* Managing Director */}
+
+      {managingDirector && (
+        <div className="bg-slate-50 rounded-3xl shadow-lg p-5">
+
+          <div className="flex gap-5 items-start">
+
+            <img
+              src={managingDirector.photo_url}
+              alt={managingDirector.name}
+              className="w-36 h-48 rounded-xl object-cover shadow-md flex-shrink-0"
+            />
+
+            <div className="flex-1">
+
+              <p className="uppercase tracking-[0.3em] text-blue-600 font-bold text-sm">
+                Managing Director
+              </p>
+
+              <h3 className="text-2xl font-bold mt-2">
+                {managingDirector.name}
+              </h3>
+
+              <div className="mt-4 space-y-2 text-slate-700 text-sm">
+                <p>✔ {managingDirector.qualification}</p>
+                <p>✔ {managingDirector.experience}</p>
+                <p>✔ {managingDirector.specialization}</p>
+              </div>
+
+            </div>
+
+          </div>
+
+          <div className="mt-5">
+
+            <h4 className="font-bold text-lg mb-2">
+              Biography
+            </h4>
+
+            <p
+              className={`leading-7 text-slate-700 ${
+                expandedDirector ? "" : "line-clamp-3"
+              }`}
+            >
+              {managingDirector.biography}
+            </p>
+
+            <button
+              onClick={() => setExpandedDirector(!expandedDirector)}
+              className="mt-3 text-blue-600 font-semibold hover:underline"
+            >
+              {expandedDirector ? "Read Less" : "Read More"}
+            </button>
+
+          </div>
+
+        </div>
+      )}
 
     </div>
 
   </div>
-</section>
 
+</section>
 
       {/* ================= REVIEWS ================= */}
 
