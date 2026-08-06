@@ -8,6 +8,7 @@ import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 import logo from "/logo/logo.png";
 import signature from "/signature/signature.png";
+import AcademyTeamManager from "../components/admin/AcademyTeamManager";
 
 import {
   FaUsers,
@@ -1168,23 +1169,31 @@ async function deleteStudent(id) {
   <AdminCourses />
 )}
 
-            {active === "media" && <AdminMedia />}
+{active === "media" && (
+  <AdminMedia />
+)}
 
-            {active === "settings" && (
+{active === "team" && (
+  <div className="max-w-7xl mx-auto">
+    <AcademyTeamManager />
+  </div>
+)}
 
-              <div className="max-w-7xl mx-auto">
+{active === "settings" && (
 
-                <h1 className="text-4xl font-black">
-                  Settings
-                </h1>
+  <div className="max-w-7xl mx-auto">
 
-                <p className="text-slate-600 mt-2">
-                  Settings page coming soon.
-                </p>
+    <h1 className="text-4xl font-black">
+      Settings
+    </h1>
 
-              </div>
+    <p className="text-slate-600 mt-2">
+      Settings page coming soon.
+    </p>
 
-            )}
+  </div>
+
+)}
 
           </section>
 

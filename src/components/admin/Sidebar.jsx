@@ -3,12 +3,15 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "../../lib/supabase";
 
 
-const menuItems = [
+ const menuItems = [
   { id: "dashboard", label: "📊 Dashboard" },
   { id: "students", label: "👨‍🎓 Students" },
   { id: "payments", label: "💳 Payments" },
   { id: "courses", label: "📚 Courses" },
   { id: "media", label: "🖼 Media" },
+
+  { id: "team", label: "👥 Academy Team" },
+
 ];
 
 export default function Sidebar({ active, setActive }) {
