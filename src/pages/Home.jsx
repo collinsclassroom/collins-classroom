@@ -408,7 +408,7 @@ return (
   <div className="max-w-7xl mx-auto px-6">
 
     <h2 className="text-4xl font-black text-center">
-      Our Teachers
+      Our Lead Teachers
     </h2>
 
     <p className="text-center text-slate-600 mt-3 mb-14">
