@@ -18,9 +18,9 @@ const [heroImage, setHeroImage] = useState(siteConfig.heroImage);
 const [academyTeam, setAcademyTeam] = useState([]);
 
 useEffect(() => {
-  loadCourses();
   loadReviews();
   loadAcademyTeam();
+  loadHeroImage();
 }, []);
 
 async function loadReviews() {
