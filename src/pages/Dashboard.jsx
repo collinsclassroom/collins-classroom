@@ -12,6 +12,7 @@ import MainLayout from "../layouts/MainLayout";
 import { supabase } from "../lib/supabase";
 
 export default function Dashboard() {
+  console.log("DASHBOARD VERSION 12345");
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
