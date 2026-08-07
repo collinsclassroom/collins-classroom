@@ -319,6 +319,7 @@ await loadDashboardStats();
     await loadDashboardStats();
 
     alert("Payment deleted successfully.");
+    
   } catch (err) {
     alert(err.message);
   } finally {
