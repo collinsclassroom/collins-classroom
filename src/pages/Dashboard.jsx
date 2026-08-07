@@ -250,7 +250,8 @@ const { data: reviewData, error: reviewError } = await supabase
 console.log(reviewData);
 console.log(reviewError);
 
-  if (data) {
+  if (reviewData) {
+
     await supabase
       .from("reviews")
       .update({
@@ -259,7 +260,9 @@ console.log(reviewError);
         status: "Pending",
       })
       .eq("student_id", session.user.id);
+
   } else {
+    
     await supabase
       .from("reviews")
       .insert({
