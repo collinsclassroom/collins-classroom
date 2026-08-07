@@ -163,7 +163,7 @@ const managingDirector = academyTeam.find(
 );
 
 const teachers = academyTeam.filter(
-  member => member.role === "teacher"
+  (member) => member.role.startsWith("teacher")
 );
 
 return (
