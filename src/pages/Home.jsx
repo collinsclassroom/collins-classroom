@@ -20,6 +20,8 @@ const [expandedFounder, setExpandedFounder] = useState(false);
 const [expandedDirector, setExpandedDirector] = useState(false);
 const [expandedTeacher, setExpandedTeacher] = useState(null);
 
+console.log("HOME COMPONENT LOADED");
+
 useEffect(() => {
 
   loadReviews();
