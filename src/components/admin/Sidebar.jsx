@@ -8,8 +8,8 @@ import { supabase } from "../../lib/supabase";
   { id: "students", label: "👨‍🎓 Students" },
   { id: "payments", label: "💳 Payments" },
   { id: "courses", label: "📚 Courses" },
+  { id: "reviews", label: "⭐ Reviews" },
   { id: "media", label: "🖼 Media" },
-
   { id: "team", label: "👥 Academy Team" },
 ];
 

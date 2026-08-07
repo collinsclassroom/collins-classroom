@@ -43,12 +43,16 @@ const [activeCourses, setActiveCourses] = useState(0);
 
 const [editCourse, setEditCourse] = useState("");
 const [editStatus, setEditStatus] = useState("");
+const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-  loadStudents();
-  loadPayments();
-  loadCourses();
-  loadDashboardStats();
+
+loadStudents();
+loadPayments();
+loadCourses();
+loadDashboardStats();
+loadReviews();
+
 }, []);
 
 useEffect(() => {
@@ -448,6 +452,28 @@ async function loadCourses() {
   setCourses(data || []);
 }
 
+async function loadReviews() {
+
+  const { data, error } = await supabase
+    .from("reviews")
+    .select(`
+      *,
+      profiles (
+        full_name,
+        email
+      )
+    `)
+    .order("created_at", { ascending: false });
+
+  if (error) {
+    console.error(error);
+    return;
+  }
+
+  setReviews(data || []);
+
+}
+
 async function deleteStudent(id) {
   const confirmDelete = window.confirm(
     "Delete this student permanently?"
@@ -473,6 +499,42 @@ async function deleteStudent(id) {
   setLoading(false);
 
   alert("Student deleted successfully.");
+}
+
+async function approveReview(id) {
+
+  const { error } = await supabase
+    .from("reviews")
+    .update({
+      status: "Approved",
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  await loadReviews();
+
+}
+
+async function rejectReview(id) {
+
+  const { error } = await supabase
+    .from("reviews")
+    .update({
+      status: "Rejected",
+    })
+    .eq("id", id);
+
+  if (error) {
+    alert(error.message);
+    return;
+  }
+
+  await loadReviews();
+
 }
 
   return (
@@ -1167,6 +1229,91 @@ async function deleteStudent(id) {
 
             {active === "courses" && (
   <AdminCourses />
+)}
+
+{active === "courses" && (
+  <AdminCourses />
+)}
+
+{active === "reviews" && (
+
+  <div className="max-w-7xl mx-auto">
+
+    <h1 className="text-4xl font-black mb-8">
+      Review Management
+    </h1>
+
+    <div className="bg-white rounded-3xl shadow-xl p-8">
+
+      {reviews.length === 0 ? (
+
+        <p>No reviews submitted yet.</p>
+
+      ) : (
+
+        <div className="space-y-6">
+
+          {reviews.map((review) => (
+
+            <div
+              key={review.id}
+              className="border rounded-2xl p-6"
+            >
+
+              <h3 className="font-bold text-xl">
+                {review.profiles?.full_name}
+              </h3>
+
+              <p className="text-slate-500">
+                {review.profiles?.email}
+              </p>
+
+              <p className="mt-3">
+                ⭐ {review.rating}/5
+              </p>
+
+              <p className="mt-3 mb-5">
+                {review.comment}
+              </p>
+
+              <div className="flex gap-4">
+
+                <button
+                  onClick={() => approveReview(review.id)}
+                  className="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-xl"
+                >
+                  Approve
+                </button>
+
+                <button
+                  onClick={() => rejectReview(review.id)}
+                  className="bg-red-600 hover:bg-red-700 text-white px-5 py-2 rounded-xl"
+                >
+                  Reject
+                </button>
+
+                <span className="ml-auto font-bold">
+                  {review.status}
+                </span>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      )}
+
+    </div>
+
+  </div>
+
+)}
+
+{active === "media" && (
+  <AdminMedia />
 )}
 
 {active === "media" && (
