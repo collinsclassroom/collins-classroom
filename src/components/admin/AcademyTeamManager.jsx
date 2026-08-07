@@ -3,6 +3,7 @@ import {
   loadTeam,
   updateMember,
   uploadMemberPhoto,
+  addMember,
 } from "../../utils/teamStorage";
 
 export default function AcademyTeamManager() {

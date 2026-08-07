@@ -36,6 +36,18 @@ export async function updateMember(id, updates) {
   return data;
 }
 
+export async function addMember(member) {
+  const { data, error } = await supabase
+    .from("academy_team")
+    .insert([member])
+    .select()
+    .single();
+
+  if (error) throw error;
+
+  return data;
+}
+
 /* =========================
    Upload Photo
 ========================= */
