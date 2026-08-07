@@ -238,11 +238,16 @@ async function submitReview() {
 
   if (!session) return;
 
-  const { data } = await supabase
-    .from("reviews")
-    .select("id")
-    .eq("student_id", session.user.id)
-    .maybeSingle();
+  console.log("Loading review...");
+
+const { data: reviewData, error: reviewError } = await supabase
+  .from("reviews")
+  .select("*")
+  .eq("student_id", session.user.id)
+  .maybeSingle();
+
+console.log(reviewData);
+console.log(reviewError);
 
   if (data) {
     await supabase
