@@ -12,7 +12,7 @@ import MainLayout from "../layouts/MainLayout";
 import { supabase } from "../lib/supabase";
 
 export default function Dashboard() {
-  console.log("DASHBOARD VERSION 12345");
+
   const navigate = useNavigate();
 
   const [loading, setLoading] = useState(true);
@@ -45,7 +45,7 @@ const [editingReview, setEditingReview] = useState(false);
         table: "reviews",
       },
       () => {
-        console.log("Review changed");
+        
         loadProfile();
       }
     )
@@ -58,14 +58,12 @@ const [editingReview, setEditingReview] = useState(false);
         table: "payments",
       },
       () => {
-        console.log("Payment changed");
+       ;
         loadProfile();
       }
     )
 
-    .subscribe((status) => {
-  console.log("DASHBOARD REALTIME:", status);
-});
+    .subscribe()
 
   return () => {
     supabase.removeChannel(channel);

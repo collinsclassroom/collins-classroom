@@ -17,8 +17,6 @@ import {
   FaCalendarAlt,
 } from "react-icons/fa";
 
-console.log("ADMIN COMPONENT LOADED");
-
 export default function Admin() {
   const [students, setStudents] = useState([]);
   const [payments, setPayments] = useState([]);
@@ -319,7 +317,7 @@ await loadDashboardStats();
     await loadDashboardStats();
 
     alert("Payment deleted successfully.");
-    
+
   } catch (err) {
     alert(err.message);
   } finally {
