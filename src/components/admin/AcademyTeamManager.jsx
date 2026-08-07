@@ -289,15 +289,15 @@ async function handlePhotoUpload(id, file) {
 
     {showAddTeacher && (
 
-      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+  <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
 
-        <div className="bg-white rounded-3xl p-8 w-full max-w-2xl">
+    <div className="bg-white rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
 
-          <h2 className="text-3xl font-black mb-6">
-            Add New Teacher
-          </h2>
+      <h2 className="text-3xl font-black mb-6">
+        Add New Teacher
+      </h2>
 
-          <div className="space-y-5">
+      <div className="space-y-5">
 
   <input
     type="text"
