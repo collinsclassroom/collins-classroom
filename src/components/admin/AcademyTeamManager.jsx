@@ -8,6 +8,17 @@ import {
 export default function AcademyTeamManager() {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [showAddTeacher, setShowAddTeacher] = useState(false);
+
+  const [newTeacher, setNewTeacher] = useState({
+  role: "",
+  name: "",
+  position: "",
+  qualification: "",
+  experience: "",
+  specialization: "",
+  biography: "",
+});
 
   useEffect(() => {
     fetchTeam();
@@ -78,9 +89,24 @@ async function handlePhotoUpload(id, file) {
   }
 
   return (
-    <div className="space-y-10">
+  <div className="space-y-10">
 
-      {team.map((member) => (
+    <div className="flex justify-between items-center mb-8">
+
+      <h1 className="text-4xl font-black">
+        Academy Team
+      </h1>
+
+      <button
+        onClick={() => setShowAddTeacher(true)}
+        className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-bold"
+      >
+        + Add Teacher
+      </button>
+
+    </div>
+
+    {team.map((member) => (
 
         <div
           key={member.id}
@@ -260,6 +286,43 @@ async function handlePhotoUpload(id, file) {
         </div>
 
       ))}
+
+    {showAddTeacher && (
+
+      <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50">
+
+        <div className="bg-white rounded-3xl p-8 w-full max-w-2xl">
+
+          <h2 className="text-3xl font-black mb-6">
+            Add New Teacher
+          </h2>
+
+          <p className="text-slate-600 mb-6">
+            Teacher form coming in the next step.
+          </p>
+
+          <div className="flex justify-end gap-4">
+
+            <button
+              onClick={() => setShowAddTeacher(false)}
+              className="px-6 py-3 border rounded-xl"
+            >
+              Cancel
+            </button>
+
+            <button
+              className="bg-blue-700 text-white px-6 py-3 rounded-xl"
+            >
+              Save Teacher
+            </button>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    )}
 
     </div>
   );
