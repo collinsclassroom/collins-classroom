@@ -162,8 +162,10 @@ const managingDirector = academyTeam.find(
   member => member.role === "managing_director"
 );
 
-const teachers = academyTeam.filter(
-  (member) => member.role.startsWith("teacher")
+const teamMembers = academyTeam.filter(
+  member =>
+    member.role !== "founder" &&
+    member.role !== "managing_director"
 );
 
 return (
@@ -441,13 +443,13 @@ return (
 
 </section>
 
-{/* ================= TEACHERS ================= */}
+{/* ================= Members ================= */}
 
 <section className="bg-slate-100 py-20">
   <div className="max-w-7xl mx-auto px-6">
 
     <h2 className="text-4xl font-black text-center">
-      Our Lead Teachers
+      Our Lead Member
     </h2>
 
     <p className="text-center text-slate-600 mt-3 mb-14">
@@ -456,63 +458,65 @@ return (
 
     <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
 
-      {teachers.map((teacher) => (
-        <div
-  key={teacher.id}
-  className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition p-4"
->
+      {teamMembers.map((member) => (
 
-          <img
-  src={teacher.photo_url}
-  alt={teacher.name}
-  className="w-28 h-36 rounded-xl object-cover object-top shadow-md mb-4"
-/>
+  <div
+    key={member.id}
+    className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-lg transition p-4"
+  >
 
-          <div className="p-5">
+    <img
+      src={member.photo_url}
+      alt={member.name}
+      className="w-28 h-36 rounded-xl object-cover object-top shadow-md mb-4"
+    />
 
-            <h3 className="text-xl font-bold">
-              {teacher.name}
-            </h3>
+    <div className="p-5">
 
-            <p className="text-blue-600 font-semibold mt-1">
-              {teacher.position}
-            </p>
+      <h3 className="text-xl font-bold">
+        {member.name}
+      </h3>
 
-            <div className="mt-3 space-y-1 text-sm text-slate-700">
-              <p>✔ {teacher.qualification}</p>
-              <p>✔ {teacher.experience}</p>
-              <p>✔ {teacher.specialization}</p>
-            </div>
+      <p className="text-blue-600 font-semibold mt-1">
+        {member.position}
+      </p>
 
-            <p
-              className={`mt-5 text-slate-600 leading-7 ${
-                expandedTeacher === teacher.id
-                  ? ""
-                  : "line-clamp-3"
-              }`}
-            >
-              {teacher.biography}
-            </p>
+      <div className="mt-3 space-y-1 text-sm text-slate-700">
+        <p>✔ {member.qualification}</p>
+        <p>✔ {member.experience}</p>
+        <p>✔ {member.specialization}</p>
+      </div>
 
-            <button
-              onClick={() =>
-                setExpandedTeacher(
-                  expandedTeacher === teacher.id
-                    ? null
-                    : teacher.id
-                )
-              }
-              className="mt-4 text-blue-600 font-semibold hover:underline"
-            >
-              {expandedTeacher === teacher.id
-                ? "Read Less"
-                : "Read More"}
-            </button>
+      <p
+        className={`mt-5 text-slate-600 leading-7 ${
+          expandedTeacher === member.id
+            ? ""
+            : "line-clamp-3"
+        }`}
+      >
+        {member.biography}
+      </p>
 
-          </div>
+      <button
+        onClick={() =>
+          setExpandedTeacher(
+            expandedTeacher === member.id
+              ? null
+              : member.id
+          )
+        }
+        className="mt-4 text-blue-600 font-semibold hover:underline"
+      >
+        {expandedTeacher === member.id
+          ? "Read Less"
+          : "Read More"}
+      </button>
 
-        </div>
-      ))}
+    </div>
+
+  </div>
+
+))}
 
     </div>
 

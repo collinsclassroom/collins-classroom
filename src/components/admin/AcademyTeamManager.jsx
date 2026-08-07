@@ -152,7 +152,7 @@ async function handleNewTeacherPhoto(file) {
         onClick={() => setShowAddTeacher(true)}
         className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-bold"
       >
-        + Add Teacher
+        + Add Team Member
       </button>
 
     </div>
@@ -345,7 +345,7 @@ async function handleNewTeacherPhoto(file) {
     <div className="bg-white rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
 
       <h2 className="text-3xl font-black mb-6">
-  Add New Teacher
+  Add New Team Member
 </h2>
 
 <div className="space-y-5">
@@ -392,18 +392,25 @@ async function handleNewTeacherPhoto(file) {
     className="w-full border rounded-xl p-3"
   />
 
-  <input
-    type="text"
-    placeholder="Role (teacher_4)"
-    value={newTeacher.role}
-    onChange={(e) =>
-      setNewTeacher({
-        ...newTeacher,
-        role: e.target.value,
-      })
-    }
-    className="w-full border rounded-xl p-3"
-  />
+  <select
+  value={newTeacher.role}
+  onChange={(e) =>
+    setNewTeacher({
+      ...newTeacher,
+      role: e.target.value,
+    })
+  }
+  className="w-full border rounded-xl p-3"
+>
+  <option value="">Select Role</option>
+  <option value="founder">Founder</option>
+  <option value="managing_director">Managing Director</option>
+  <option value="teacher">Teacher</option>
+  <option value="marketing_manager">Marketing Manager</option>
+  <option value="receptionist">Receptionist</option>
+  <option value="accountant">Accountant</option>
+  <option value="it_administrator">IT Administrator</option>
+</select>
 
   <input
     type="text"
