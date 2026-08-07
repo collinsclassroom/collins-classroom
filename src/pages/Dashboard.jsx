@@ -86,10 +86,7 @@ const [editingReview, setEditingReview] = useState(false);
 
 setPayments(paymentData || []);
 
-    setLoading(false);
-  }
-
-  const { data: reviewData } = await supabase
+const { data: reviewData } = await supabase
   .from("reviews")
   .select("*")
   .eq("student_id", session.user.id)
@@ -100,6 +97,10 @@ if (reviewData) {
   setRating(reviewData.rating || 5);
   setReviewStatus(reviewData.status);
 }
+
+    setLoading(false);
+  }
+
 
   async function saveCourses() {
   const {
