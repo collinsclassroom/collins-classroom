@@ -24,6 +24,11 @@ export default function Dashboard() {
   const [paymentAmount, setPaymentAmount] = useState("");
 const [uploading, setUploading] = useState(false);
 const [payments, setPayments] = useState([]);
+const [review, setReview] = useState("");
+const [rating, setRating] = useState(5);
+const [reviewStatus, setReviewStatus] = useState(null);
+const [editingReview, setEditingReview] = useState(false);
+
 
   useEffect(() => {
     loadProfile();
@@ -84,6 +89,17 @@ setPayments(paymentData || []);
     setLoading(false);
   }
 
+  const { data: reviewData } = await supabase
+  .from("reviews")
+  .select("*")
+  .eq("student_id", session.user.id)
+  .maybeSingle();
+
+if (reviewData) {
+  setReview(reviewData.comment || "");
+  setRating(reviewData.rating || 5);
+  setReviewStatus(reviewData.status);
+}
 
   async function saveCourses() {
   const {
@@ -213,6 +229,49 @@ if (uploadError) {
 } finally {
     setUploading(false);
 }
+}
+
+async function submitReview() {
+  const {
+    data: { session },
+  } = await supabase.auth.getSession();
+
+  if (!session) return;
+
+  const { data } = await supabase
+    .from("reviews")
+    .select("id")
+    .eq("student_id", session.user.id)
+    .maybeSingle();
+
+  if (data) {
+    await supabase
+      .from("reviews")
+      .update({
+        rating,
+        comment: review,
+        status: "Pending",
+      })
+      .eq("student_id", session.user.id);
+  } else {
+    await supabase
+      .from("reviews")
+      .insert({
+        student_id: session.user.id,
+        reviewer_name: profile.full_name,
+        rating,
+        comment: review,
+        status: "Pending",
+      });
+  }
+
+  alert("Review submitted successfully.");
+
+  loadProfile();
+}
+
+function editReview() {
+  setEditingReview(true);
 }
 
     async function logout() {
@@ -554,6 +613,86 @@ if (uploadError) {
     </div>
 
   )}
+
+</div>
+
+{/* Review */}
+
+<div className="bg-white rounded-3xl shadow-xl p-8 mt-12">
+
+  <h2 className="text-3xl font-black mb-6">
+    My Review
+  </h2>
+
+  <label className="block font-semibold mb-2">
+    Rating
+  </label>
+
+  <select
+    value={rating}
+    onChange={(e) => setRating(Number(e.target.value))}
+    disabled={!editingReview && reviewStatus === "Approved"}
+    className="w-full border rounded-xl p-3 mb-5"
+  >
+    <option value={5}>★★★★★</option>
+    <option value={4}>★★★★☆</option>
+    <option value={3}>★★★☆☆</option>
+    <option value={2}>★★☆☆☆</option>
+    <option value={1}>★☆☆☆☆</option>
+  </select>
+
+  <label className="block font-semibold mb-2">
+    Review
+  </label>
+
+  <textarea
+    rows={5}
+    value={review}
+    onChange={(e) => setReview(e.target.value)}
+    disabled={!editingReview && reviewStatus === "Approved"}
+    className="w-full border rounded-xl p-4"
+    placeholder="Write your review here..."
+  />
+
+  <div className="mt-5">
+
+    {reviewStatus === "Approved" && (
+      <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold">
+        ✅ Approved
+      </span>
+    )}
+
+    {reviewStatus === "Pending" && (
+      <span className="bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full font-bold">
+        ⏳ Pending
+      </span>
+    )}
+
+    {reviewStatus === "Rejected" && (
+      <span className="bg-red-100 text-red-700 px-4 py-2 rounded-full font-bold">
+        ❌ Rejected
+      </span>
+    )}
+
+  </div>
+
+  <div className="flex gap-4 mt-8">
+
+    <button
+      onClick={editReview}
+      className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-bold"
+    >
+      Edit
+    </button>
+
+    <button
+      onClick={submitReview}
+      className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-bold"
+    >
+      Send
+    </button>
+
+  </div>
 
 </div>
 
