@@ -66,30 +66,6 @@ const [editingReview, setEditingReview] = useState(false);
   console.log("DASHBOARD REALTIME:", status);
 });
 
-channel.on(
-  "postgres_changes",
-  {
-    event: "*",
-    schema: "public",
-    table: "reviews",
-  },
-  (payload) => {
-    console.log("REVIEW EVENT RECEIVED:", payload);
-  }
-);
-
-channel.on(
-  "postgres_changes",
-  {
-    event: "*",
-    schema: "public",
-    table: "payments",
-  },
-  (payload) => {
-    console.log("PAYMENT EVENT RECEIVED:", payload);
-  }
-);
-
   return () => {
     supabase.removeChannel(channel);
   };
