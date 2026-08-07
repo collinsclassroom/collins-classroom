@@ -124,19 +124,31 @@ const [editingReview, setEditingReview] = useState(false);
 
 setPayments(paymentData || []);
 
-const { data: reviewData } = await supabase
-  .from("reviews")
-  .select("*")
-  .eq("student_id", session.user.id)
-  .maybeSingle();
+try {
+  const { data: reviewData, error: reviewError } = await supabase
+    .from("reviews")
+    .select("*")
+    .eq("student_id", session.user.id)
+    .maybeSingle();
 
-if (reviewData) {
-  setReview(reviewData.comment || "");
-  setRating(reviewData.rating || 5);
-  setReviewStatus(reviewData.status);
+  if (reviewError) {
+    console.error(reviewError);
+  }
+
+  if (reviewData) {
+    setReview(reviewData.comment || "");
+    setRating(reviewData.rating || 5);
+    setReviewStatus(reviewData.status);
+  } else {
+    setReview("");
+    setRating(5);
+    setReviewStatus(null);
+  }
+} catch (err) {
+  console.error(err);
 }
 
-    setLoading(false);
+setLoading(false);
   }
 
 
