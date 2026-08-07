@@ -31,8 +31,42 @@ const [editingReview, setEditingReview] = useState(false);
 
 
   useEffect(() => {
-    loadProfile();
-  }, []);
+  loadProfile();
+
+  const channel = supabase
+    .channel("student-dashboard")
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "reviews",
+      },
+      () => {
+        loadProfile();
+      }
+    )
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "payments",
+      },
+      () => {
+        loadProfile();
+      }
+    )
+
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+
+}, []);
 
   async function loadProfile() {
     const {
@@ -262,7 +296,7 @@ console.log(reviewError);
       .eq("student_id", session.user.id);
 
   } else {
-    
+
     await supabase
       .from("reviews")
       .insert({

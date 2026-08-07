@@ -47,11 +47,58 @@ const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
 
-loadStudents();
-loadPayments();
-loadCourses();
-loadDashboardStats();
-loadReviews();
+  loadStudents();
+  loadPayments();
+  loadCourses();
+  loadDashboardStats();
+  loadReviews();
+
+  const channel = supabase
+    .channel("admin-realtime")
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "reviews",
+      },
+      () => {
+        loadReviews();
+        loadDashboardStats();
+      }
+    )
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "payments",
+      },
+      () => {
+        loadPayments();
+        loadDashboardStats();
+      }
+    )
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "profiles",
+      },
+      () => {
+        loadStudents();
+      }
+    )
+
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
 
 }, []);
 

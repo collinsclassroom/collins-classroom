@@ -21,9 +21,44 @@ const [expandedDirector, setExpandedDirector] = useState(false);
 const [expandedTeacher, setExpandedTeacher] = useState(null);
 
 useEffect(() => {
+
   loadReviews();
   loadAcademyTeam();
   loadHeroImage();
+
+  const channel = supabase
+    .channel("home-realtime")
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "reviews",
+      },
+      () => {
+        loadReviews();
+      }
+    )
+
+    .on(
+      "postgres_changes",
+      {
+        event: "*",
+        schema: "public",
+        table: "academy_team",
+      },
+      () => {
+        loadAcademyTeam();
+      }
+    )
+
+    .subscribe();
+
+  return () => {
+    supabase.removeChannel(channel);
+  };
+
 }, []);
 
 async function loadReviews() {
