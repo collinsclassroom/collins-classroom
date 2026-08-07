@@ -62,7 +62,7 @@ export default function AcademyTeamManager() {
       ...newTeacher,
     };
 
-    await updateMember(null, teacher);
+    await addMember(teacher);
 
     await fetchTeam();
 
