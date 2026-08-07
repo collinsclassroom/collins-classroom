@@ -620,7 +620,7 @@ function editReview() {
 
 <div className="bg-white rounded-3xl shadow-xl p-8 mt-12">
 
-  <h2 className="text-3xl font-black mb-6">
+  <h2 className="text-3xl font-black mb-8">
     My Review
   </h2>
 
@@ -650,11 +650,11 @@ function editReview() {
     value={review}
     onChange={(e) => setReview(e.target.value)}
     disabled={!editingReview && reviewStatus === "Approved"}
-    className="w-full border rounded-xl p-4"
     placeholder="Write your review here..."
+    className="w-full border rounded-xl p-4"
   />
 
-  <div className="mt-5">
+  <div className="mt-6">
 
     {reviewStatus === "Approved" && (
       <span className="bg-green-100 text-green-700 px-4 py-2 rounded-full font-bold">
@@ -664,7 +664,7 @@ function editReview() {
 
     {reviewStatus === "Pending" && (
       <span className="bg-yellow-100 text-yellow-700 px-4 py-2 rounded-full font-bold">
-        ⏳ Pending
+        ⏳ Pending Approval
       </span>
     )}
 
@@ -679,6 +679,7 @@ function editReview() {
   <div className="flex gap-4 mt-8">
 
     <button
+      type="button"
       onClick={editReview}
       className="bg-gray-700 hover:bg-gray-800 text-white px-6 py-3 rounded-xl font-bold"
     >
@@ -686,6 +687,7 @@ function editReview() {
     </button>
 
     <button
+      type="button"
       onClick={submitReview}
       className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-bold"
     >
