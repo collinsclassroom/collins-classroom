@@ -53,7 +53,9 @@ useEffect(() => {
       }
     )
 
-    .subscribe();
+    .subscribe((status) => {
+  console.log("HOME REALTIME:", status);
+});
 
   return () => {
     supabase.removeChannel(channel);
