@@ -18,6 +18,7 @@ export default function AcademyTeamManager() {
   experience: "",
   specialization: "",
   biography: "",
+  photo_url: "",
 });
 
   useEffect(() => {
@@ -53,6 +54,36 @@ export default function AcademyTeamManager() {
       )
     );
   }
+
+  async function saveNewTeacher() {
+  try {
+    const teacher = {
+      ...newTeacher,
+    };
+
+    await updateMember(null, teacher);
+
+    await fetchTeam();
+
+    setShowAddTeacher(false);
+
+    setNewTeacher({
+      role: "",
+      name: "",
+      position: "",
+      qualification: "",
+      experience: "",
+      specialization: "",
+      biography: "",
+      photo_url: "",
+    });
+
+    alert("Teacher added successfully.");
+  } catch (err) {
+    alert(err.message);
+  }
+}
+
 async function handlePhotoUpload(id, file) {
   if (!file) return;
 
@@ -79,6 +110,25 @@ async function handlePhotoUpload(id, file) {
   alert(JSON.stringify(err, null, 2));
 }
 }
+
+async function handleNewTeacherPhoto(file) {
+  if (!file) return;
+
+  try {
+    const photoUrl = await uploadMemberPhoto(file, file.name);
+
+    setNewTeacher((prev) => ({
+      ...prev,
+      photo_url: photoUrl,
+    }));
+
+    alert("Photo uploaded successfully.");
+  } catch (err) {
+    console.error(err);
+    alert(err.message);
+  }
+}
+
   if (loading) {
 
     return (
@@ -294,10 +344,49 @@ async function handlePhotoUpload(id, file) {
     <div className="bg-white rounded-3xl p-8 w-full max-w-2xl max-h-[90vh] overflow-y-auto">
 
       <h2 className="text-3xl font-black mb-6">
-        Add New Teacher
-      </h2>
+  Add New Teacher
+</h2>
 
-      <div className="space-y-5">
+<div className="space-y-5">
+
+  {newTeacher.photo_url && (
+    <div className="flex justify-center">
+      <img
+        src={newTeacher.photo_url}
+        alt="Teacher"
+        className="w-40 h-40 rounded-2xl object-cover border shadow"
+      />
+    </div>
+  )}
+
+  <div>
+    <label className="block font-semibold mb-2">
+      Teacher Photo
+    </label>
+
+    <input
+      type="file"
+      accept="image/*"
+      onChange={(e) =>
+        handleNewTeacherPhoto(e.target.files[0])
+      }
+      className="w-full border rounded-xl p-3"
+    />
+
+    <p className="text-sm text-slate-500 mt-2">
+      Upload a teacher profile photo.
+    </p>
+  </div>
+
+  {newTeacher.photo_url && (
+  <div className="flex justify-center">
+    <img
+      src={newTeacher.photo_url}
+      alt="Teacher"
+      className="w-40 h-40 rounded-2xl object-cover border shadow"
+    />
+  </div>
+)}
 
   <input
     type="text"
@@ -402,10 +491,11 @@ async function handlePhotoUpload(id, file) {
             </button>
 
             <button
-              className="bg-blue-700 text-white px-6 py-3 rounded-xl"
-            >
-              Save Teacher
-            </button>
+  onClick={saveNewTeacher}
+  className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-bold"
+>
+  Save Teacher
+</button>
 
           </div>
 
