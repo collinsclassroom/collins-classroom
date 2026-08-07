@@ -297,9 +297,100 @@ async function handlePhotoUpload(id, file) {
             Add New Teacher
           </h2>
 
-          <p className="text-slate-600 mb-6">
-            Teacher form coming in the next step.
-          </p>
+          <div className="space-y-5">
+
+  <input
+    type="text"
+    placeholder="Full Name"
+    value={newTeacher.name}
+    onChange={(e) =>
+      setNewTeacher({
+        ...newTeacher,
+        name: e.target.value,
+      })
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+  <input
+    type="text"
+    placeholder="Role (teacher_4)"
+    value={newTeacher.role}
+    onChange={(e) =>
+      setNewTeacher({
+        ...newTeacher,
+        role: e.target.value,
+      })
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+  <input
+    type="text"
+    placeholder="Position"
+    value={newTeacher.position}
+    onChange={(e) =>
+      setNewTeacher({
+        ...newTeacher,
+        position: e.target.value,
+      })
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+  <textarea
+    rows={2}
+    placeholder="Qualification"
+    value={newTeacher.qualification}
+    onChange={(e) =>
+      setNewTeacher({
+        ...newTeacher,
+        qualification: e.target.value,
+      })
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+  <input
+    type="text"
+    placeholder="Experience"
+    value={newTeacher.experience}
+    onChange={(e) =>
+      setNewTeacher({
+        ...newTeacher,
+        experience: e.target.value,
+      })
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+  <textarea
+    rows={2}
+    placeholder="Specialization"
+    value={newTeacher.specialization}
+    onChange={(e) =>
+      setNewTeacher({
+        ...newTeacher,
+        specialization: e.target.value,
+      })
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+  <textarea
+    rows={5}
+    placeholder="Biography"
+    value={newTeacher.biography}
+    onChange={(e) =>
+      setNewTeacher({
+        ...newTeacher,
+        biography: e.target.value,
+      })
+    }
+    className="w-full border rounded-xl p-3"
+  />
+
+</div>
 
           <div className="flex justify-end gap-4">
 
