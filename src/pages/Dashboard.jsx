@@ -44,6 +44,7 @@ const [editingReview, setEditingReview] = useState(false);
         table: "reviews",
       },
       () => {
+        console.log("Review changed");
         loadProfile();
       }
     )
@@ -56,11 +57,14 @@ const [editingReview, setEditingReview] = useState(false);
         table: "payments",
       },
       () => {
+        console.log("Payment changed");
         loadProfile();
       }
     )
 
-    .subscribe();
+    .subscribe((status) => {
+      console.log("DASHBOARD REALTIME:", status);
+    });
 
   return () => {
     supabase.removeChannel(channel);
