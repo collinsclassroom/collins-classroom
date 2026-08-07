@@ -350,16 +350,6 @@ async function handleNewTeacherPhoto(file) {
 
 <div className="space-y-5">
 
-  {newTeacher.photo_url && (
-    <div className="flex justify-center">
-      <img
-        src={newTeacher.photo_url}
-        alt="Teacher"
-        className="w-40 h-40 rounded-2xl object-cover border shadow"
-      />
-    </div>
-  )}
-
   <div>
     <label className="block font-semibold mb-2">
       Teacher Photo
