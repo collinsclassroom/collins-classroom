@@ -52,7 +52,7 @@ export default function Footer() {
         </div>
 
         <p className="text-center text-slate-400 mt-8">
-          © 2019 Collins Classroom. All Rights Reserved.
+          © 2005 Collins Classroom. All Rights Reserved.
         </p>
 
       </div>
