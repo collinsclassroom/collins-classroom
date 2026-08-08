@@ -14,7 +14,7 @@ export default function Home() {
   const [reviews, setReviews] = useState([]);
 const [visibleReviews, setVisibleReviews] = useState([]);
 const [averageRating, setAverageRating] = useState(5);
-const [heroImage, setHeroImage] = useState(siteConfig.heroImage);
+const [heroImage, setHeroImage] = useState(null);
 const [academyTeam, setAcademyTeam] = useState([]);
 const [expandedFounder, setExpandedFounder] = useState(false);
 const [expandedDirector, setExpandedDirector] = useState(false);
@@ -289,11 +289,13 @@ return (
 
               <div className="w-[450px] h-[620px] rounded-3xl overflow-hidden shadow-2xl border-4 border-yellow-400 bg-white">
 
-                <img
-                  src={heroImage}
-                  alt="Collins Classroom"
-                  className="w-full h-full object-cover object-top"
-                />
+                {heroImage && (
+  <img
+    src={heroImage}
+    alt="Collins Classroom"
+    className="w-full h-full object-cover object-top"
+  />
+)}
 
               </div>
 
