@@ -269,6 +269,7 @@ return (
                 teenagers and adults. Learn confidently with
                 practical speaking, grammar, pronunciation and
                 real-life communication.
+                We have online school program for students from Grade 3 to SS3
               </p>
 
               <div className="flex flex-wrap gap-5 mt-10">
