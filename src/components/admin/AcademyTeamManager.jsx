@@ -4,23 +4,25 @@ import {
   updateMember,
   uploadMemberPhoto,
   addMember,
+  deleteMember,
 } from "../../utils/teamStorage";
 
 export default function AcademyTeamManager() {
   const [team, setTeam] = useState([]);
   const [loading, setLoading] = useState(true);
-  const [showAddTeacher, setShowAddTeacher] = useState(false);
 
-  const [newTeacher, setNewTeacher] = useState({
-  role: "",
-  name: "",
-  position: "",
-  qualification: "",
-  experience: "",
-  specialization: "",
-  biography: "",
-  photo_url: "",
-});
+  const [showAddTeam, setShowAddTeam] = useState(false);
+
+  const [newTeam, setNewTeam] = useState({
+    role: "",
+    name: "",
+    position: "",
+    qualification: "",
+    experience: "",
+    specialization: "",
+    biography: "",
+    photo_url: "",
+  });
 
   useEffect(() => {
     fetchTeam();
@@ -56,82 +58,97 @@ export default function AcademyTeamManager() {
     );
   }
 
-  async function saveNewTeacher() {
-  try {
-    const teacher = {
-      ...newTeacher,
-    };
+  async function removeMember(id, name) {
+    const confirmed = window.confirm(
+      `Are you sure you want to delete "${name}"?\n\nThis action cannot be undone.`
+    );
 
-    await addMember(teacher);
+    if (!confirmed) return;
 
-    await fetchTeam();
-
-    setShowAddTeacher(false);
-
-    setNewTeacher({
-      role: "",
-      name: "",
-      position: "",
-      qualification: "",
-      experience: "",
-      specialization: "",
-      biography: "",
-      photo_url: "",
-    });
-
-    alert("Teacher added successfully.");
-  } catch (err) {
-    alert(err.message);
+    try {
+      await deleteMember(id);
+      await fetchTeam();
+      alert("Team member deleted successfully.");
+    } catch (err) {
+      alert(err.message);
+    }
   }
-}
 
-async function handlePhotoUpload(id, file) {
-  if (!file) return;
+  async function saveNewTeam() {
+    try {
+      const member = {
+        ...newTeam,
+      };
 
-  try {
-    console.log("Member ID:", id);
+      await addMember(member);
 
-    const photoUrl = await uploadMemberPhoto(file, file.name);
+      await fetchTeam();
 
-    console.log("Photo URL:", photoUrl);
+      setShowAddTeam(false);
 
-    const result = await updateMember(id, {
-      photo_url: photoUrl,
-    });
+      setNewTeam({
+        role: "",
+        name: "",
+        position: "",
+        qualification: "",
+        experience: "",
+        specialization: "",
+        biography: "",
+        photo_url: "",
+      });
 
-    console.log("Database Update:", result);
-
-    const updatedTeam = await loadTeam();
-    setTeam(updatedTeam);
-
-    alert("Photo uploaded successfully.");
-  } catch (err) {
-  console.error(err);
-  console.log(JSON.stringify(err, null, 2));
-  alert(JSON.stringify(err, null, 2));
-}
-}
-
-async function handleNewTeacherPhoto(file) {
-  if (!file) return;
-
-  try {
-    const photoUrl = await uploadMemberPhoto(file, file.name);
-
-    setNewTeacher((prev) => ({
-      ...prev,
-      photo_url: photoUrl,
-    }));
-
-    alert("Photo uploaded successfully.");
-  } catch (err) {
-    console.error(err);
-    alert(err.message);
+      alert("Team member added successfully.");
+    } catch (err) {
+      alert(err.message);
+    }
   }
-}
+
+  async function handlePhotoUpload(id, file) {
+    if (!file) return;
+
+    try {
+      console.log("Member ID:", id);
+
+      const photoUrl = await uploadMemberPhoto(file, file.name);
+
+      console.log("Photo URL:", photoUrl);
+
+      const result = await updateMember(id, {
+        photo_url: photoUrl,
+      });
+
+      console.log("Database Update:", result);
+
+      const updatedTeam = await loadTeam();
+      setTeam(updatedTeam);
+
+      alert("Photo uploaded successfully.");
+    } catch (err) {
+      console.error(err);
+      console.log(JSON.stringify(err, null, 2));
+      alert(JSON.stringify(err, null, 2));
+    }
+  }
+
+  async function handleNewTeamPhoto(file) {
+    if (!file) return;
+
+    try {
+      const photoUrl = await uploadMemberPhoto(file, file.name);
+
+      setNewTeam((prev) => ({
+        ...prev,
+        photo_url: photoUrl,
+      }));
+
+      alert("Photo uploaded successfully.");
+    } catch (err) {
+      console.error(err);
+      alert(err.message);
+    }
+  }
 
   if (loading) {
-
     return (
       <div className="text-center py-20">
         Loading Academy Team...
@@ -140,6 +157,7 @@ async function handleNewTeacherPhoto(file) {
   }
 
   return (
+
   <div className="space-y-10">
 
     <div className="flex justify-between items-center mb-8">
@@ -149,7 +167,7 @@ async function handleNewTeacherPhoto(file) {
       </h1>
 
       <button
-        onClick={() => setShowAddTeacher(true)}
+        onClick={() => setShowAddTeam(true)}
         className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-bold"
       >
         + Add Team Member
@@ -327,18 +345,29 @@ async function handleNewTeacherPhoto(file) {
 
           </div>
 
-          <button
-            onClick={() => saveMember(member)}
-            className="mt-8 bg-blue-700 text-white px-8 py-3 rounded-xl font-bold"
-          >
-            Save Changes
-          </button>
+          <div className="mt-8 flex gap-4">
+
+  <button
+    onClick={() => saveMember(member)}
+    className="bg-blue-700 text-white px-8 py-3 rounded-xl font-bold"
+  >
+    Save Changes
+  </button>
+
+  <button
+    onClick={() => removeMember(member.id, member.name)}
+    className="bg-red-600 hover:bg-red-700 text-white px-8 py-3 rounded-xl font-bold"
+  >
+    Delete
+  </button>
+
+</div>
 
         </div>
 
       ))}
 
-    {showAddTeacher && (
+    {showAddTeam && (
 
   <div className="fixed inset-0 bg-black/50 flex items-center justify-center z-50 p-4">
 
@@ -350,11 +379,11 @@ async function handleNewTeacherPhoto(file) {
 
 <div className="space-y-5">
 
-  {newTeacher.photo_url && (
+  {newTeam.photo_url && (
     <div className="flex justify-center">
       <img
-        src={newTeacher.photo_url}
-        alt="Teacher"
+        src={newTeam.photo_url}
+        alt="Team Member"
         className="w-40 h-40 rounded-2xl object-cover border shadow"
       />
     </div>
@@ -362,30 +391,30 @@ async function handleNewTeacherPhoto(file) {
 
   <div>
     <label className="block font-semibold mb-2">
-      Teacher Photo
+      Team Member Photo
     </label>
 
     <input
       type="file"
       accept="image/*"
       onChange={(e) =>
-        handleNewTeacherPhoto(e.target.files[0])
+        handleNewTeamPhoto(e.target.files[0])
       }
       className="w-full border rounded-xl p-3"
     />
 
     <p className="text-sm text-slate-500 mt-2">
-      Upload a teacher profile photo.
+      Upload a team member profile photo.
     </p>
   </div>
 
   <input
     type="text"
     placeholder="Full Name"
-    value={newTeacher.name}
+    value={newTeam.name}
     onChange={(e) =>
-      setNewTeacher({
-        ...newTeacher,
+      setNewTeam({
+        ...newTeam,
         name: e.target.value,
       })
     }
@@ -393,10 +422,10 @@ async function handleNewTeacherPhoto(file) {
   />
 
   <select
-  value={newTeacher.role}
+  value={newTeam.role}
   onChange={(e) =>
-    setNewTeacher({
-      ...newTeacher,
+    setNewTeam({
+      ...newTeam,
       role: e.target.value,
     })
   }
@@ -405,7 +434,7 @@ async function handleNewTeacherPhoto(file) {
   <option value="">Select Role</option>
   <option value="founder">Founder</option>
   <option value="managing_director">Managing Director</option>
-  <option value="teacher">Teacher</option>
+  <option value="team">Team</option>
   <option value="marketing_manager">Marketing Manager</option>
   <option value="receptionist">Receptionist</option>
   <option value="accountant">Accountant</option>
@@ -415,10 +444,10 @@ async function handleNewTeacherPhoto(file) {
   <input
     type="text"
     placeholder="Position"
-    value={newTeacher.position}
+    value={newTeam.position}
     onChange={(e) =>
-      setNewTeacher({
-        ...newTeacher,
+      setNewTeam({
+        ...newTeam,
         position: e.target.value,
       })
     }
@@ -428,10 +457,10 @@ async function handleNewTeacherPhoto(file) {
   <textarea
     rows={2}
     placeholder="Qualification"
-    value={newTeacher.qualification}
+    value={newTeam.qualification}
     onChange={(e) =>
-      setNewTeacher({
-        ...newTeacher,
+      setNewTeam({
+        ...newTeam,
         qualification: e.target.value,
       })
     }
@@ -441,10 +470,10 @@ async function handleNewTeacherPhoto(file) {
   <input
     type="text"
     placeholder="Experience"
-    value={newTeacher.experience}
+    value={newTeam.experience}
     onChange={(e) =>
-      setNewTeacher({
-        ...newTeacher,
+      setNewTeam({
+        ...newTeam,
         experience: e.target.value,
       })
     }
@@ -454,10 +483,10 @@ async function handleNewTeacherPhoto(file) {
   <textarea
     rows={2}
     placeholder="Specialization"
-    value={newTeacher.specialization}
+    value={newTeam.specialization}
     onChange={(e) =>
-      setNewTeacher({
-        ...newTeacher,
+      setNewTeam({
+        ...newTeam,
         specialization: e.target.value,
       })
     }
@@ -467,10 +496,10 @@ async function handleNewTeacherPhoto(file) {
   <textarea
     rows={5}
     placeholder="Biography"
-    value={newTeacher.biography}
+    value={newTeam.biography}
     onChange={(e) =>
-      setNewTeacher({
-        ...newTeacher,
+      setNewTeam({
+        ...newTeamr,
         biography: e.target.value,
       })
     }
@@ -482,17 +511,30 @@ async function handleNewTeacherPhoto(file) {
           <div className="flex justify-end gap-4">
 
             <button
-              onClick={() => setShowAddTeacher(false)}
-              className="px-6 py-3 border rounded-xl"
-            >
-              Cancel
-            </button>
+  onClick={() => {
+    setShowAddTeam(false);
+
+    setNewTeam({
+      role: "",
+      name: "",
+      position: "",
+      qualification: "",
+      experience: "",
+      specialization: "",
+      biography: "",
+      photo_url: "",
+    });
+  }}
+  className="px-6 py-3 border rounded-xl"
+>
+  Cancel
+</button>
 
             <button
-  onClick={saveNewTeacher}
+  onClick={saveNewTeam}
   className="bg-blue-700 hover:bg-blue-800 text-white px-6 py-3 rounded-xl font-bold"
 >
-  Save Teacher
+  Save Team Member
 </button>
 
           </div>
