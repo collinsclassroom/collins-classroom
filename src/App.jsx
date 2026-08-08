@@ -10,6 +10,7 @@ import Register from "./pages/Register";
 import Dashboard from "./pages/Dashboard";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
+import OnlineSchool from "./pages/OnlineSchool";
 
 function App() {
   return (
@@ -27,6 +28,7 @@ function App() {
       <Route path="/dashboard" element={<Dashboard />} />
       <Route path="/admin-login" element={<AdminLogin />} />
       <Route path="/admin" element={<Admin />} />
+      <Route path="/online-school" element={<OnlineSchool />} />
     </Routes>
   );
 }

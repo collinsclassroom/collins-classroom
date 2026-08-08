@@ -274,14 +274,16 @@ return (
               <div className="flex flex-wrap gap-5 mt-10">
 
                 <a
-                  href={`https://wa.me/${siteConfig.whatsapp.replace("+", "")}`}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold hover:scale-105 duration-300 shadow-xl"
-                >
-                  <FaWhatsapp />
-                  Book Free Trial
-                </a>
+  href={`https://wa.me/${siteConfig.whatsapp.replace("+", "")}?text=${encodeURIComponent(
+    "Hello, I am here for a trial lesson."
+  )}`}
+  target="_blank"
+  rel="noopener noreferrer"
+  className="flex items-center gap-3 bg-yellow-400 text-black px-8 py-4 rounded-xl font-bold hover:scale-105 duration-300 shadow-xl"
+>
+  <FaWhatsapp />
+  Book Trial Lesson — $3
+</a>
 
                 <button
   type="button"
@@ -665,6 +667,16 @@ return (
     </div>
   </div>
 )}
+
+<a
+  href="/online-school"
+  className="flex items-center gap-3 border border-yellow-400 text-yellow-400 px-8 py-4 rounded-xl font-bold hover:bg-yellow-400 hover:text-black duration-300"
+>
+  Online School
+  <span className="text-xs bg-yellow-400 text-black px-2 py-1 rounded-full">
+    Coming Soon
+  </span>
+</a>
 
     </MainLayout>
     </>
