@@ -294,6 +294,16 @@ return (
   Watch Introduction
 </button>
 
+<a
+  href="/online-school"
+  className="flex items-center gap-3 border border-yellow-400 text-yellow-400 px-8 py-4 rounded-xl font-bold hover:bg-yellow-400 hover:text-black duration-300"
+>
+  Online School
+  <span className="text-xs bg-yellow-400 text-black px-2 py-1 rounded-full">
+    Coming Soon
+  </span>
+</a>
+
               </div>
 
               <div className="grid grid-cols-3 gap-8 mt-16">
@@ -667,17 +677,6 @@ return (
     </div>
   </div>
 )}
-
-<a
-  href="/online-school"
-  className="flex items-center gap-3 border border-yellow-400 text-yellow-400 px-8 py-4 rounded-xl font-bold hover:bg-yellow-400 hover:text-black duration-300"
->
-  Online School
-  <span className="text-xs bg-yellow-400 text-black px-2 py-1 rounded-full">
-    Coming Soon
-  </span>
-</a>
-
     </MainLayout>
     </>
   );
