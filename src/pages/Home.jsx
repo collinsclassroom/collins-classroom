@@ -253,14 +253,12 @@ return (
                 </a>
 
                 <a
-                  href={siteConfig.youtube}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex items-center gap-3 border border-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-black duration-300"
-                >
-                  <FaPlayCircle />
-                  Watch Introduction
-                </a>
+  href="/about#introduction-video"
+  className="flex items-center gap-3 border border-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-black duration-300"
+>
+  <FaPlayCircle />
+  Watch Introduction
+</a>
 
               </div>
 

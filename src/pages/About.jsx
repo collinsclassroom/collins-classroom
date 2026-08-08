@@ -383,7 +383,10 @@ async function loadGalleryMedia() {
 
     {/* Introduction Video */}
 
-    <div className="mt-12 max-w-5xl mx-auto">
+<div
+  id="introduction-video"
+  className="mt-12 max-w-5xl mx-auto"
+>
 
       {introductionVideo ? (
 
