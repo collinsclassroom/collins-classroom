@@ -1,5 +1,5 @@
 import { Helmet } from "react-helmet-async";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import MainLayout from "../layouts/MainLayout";
 import siteConfig from "../config/siteConfig";
 import { supabase } from "../lib/supabase";
@@ -15,6 +15,9 @@ export default function Home() {
 const [visibleReviews, setVisibleReviews] = useState([]);
 const [averageRating, setAverageRating] = useState(5);
 const [heroImage, setHeroImage] = useState(null);
+const [introductionVideo, setIntroductionVideo] = useState("");
+const [showIntroductionVideo, setShowIntroductionVideo] = useState(false);
+const introductionVideoRef = useRef(null);
 const [academyTeam, setAcademyTeam] = useState([]);
 const [expandedFounder, setExpandedFounder] = useState(false);
 const [expandedDirector, setExpandedDirector] = useState(false);
@@ -25,8 +28,9 @@ console.log("HOME COMPONENT LOADED");
 useEffect(() => {
 
   loadReviews();
-  loadAcademyTeam();
-  loadHeroImage();
+loadAcademyTeam();
+loadHeroImage();
+loadIntroductionVideo();
 
   const channel = supabase
     .channel("home-realtime")
@@ -139,6 +143,23 @@ useEffect(() => {
   return () => clearInterval(interval);
 }, [reviews]);
 
+async function loadIntroductionVideo() {
+  const { data, error } = await supabase
+    .from("media")
+    .select("file_url")
+    .eq("media_key", "introduction_video")
+    .single();
+
+  if (error) {
+    console.error("Introduction video error:", error);
+    return;
+  }
+
+  if (data?.file_url) {
+    setIntroductionVideo(data.file_url);
+  }
+}
+
 async function loadAcademyTeam() {
   const { data, error } = await supabase
     .from("academy_team")
@@ -167,6 +188,16 @@ const teamMembers = academyTeam.filter(
     member.role !== "founder" &&
     member.role !== "managing_director"
 );
+
+function openIntroductionVideo() {
+  setShowIntroductionVideo(true);
+
+  setTimeout(() => {
+    introductionVideoRef.current?.play().catch((error) => {
+      console.error("Video playback failed:", error);
+    });
+  }, 100);
+}
 
 return (
 
@@ -252,13 +283,14 @@ return (
                   Book Free Trial
                 </a>
 
-                <a
-  href="/about#introduction-video"
+                <button
+  type="button"
+  onClick={openIntroductionVideo}
   className="flex items-center gap-3 border border-white px-8 py-4 rounded-xl font-bold hover:bg-white hover:text-black duration-300"
 >
   <FaPlayCircle />
   Watch Introduction
-</a>
+</button>
 
               </div>
 
@@ -603,6 +635,36 @@ return (
   </div>
 
 </section>
+
+{showIntroductionVideo && introductionVideo && (
+  <div
+    className="fixed inset-0 z-[9999] bg-black/90 flex items-center justify-center p-6"
+    onClick={() => setShowIntroductionVideo(false)}
+  >
+    <div
+      className="relative w-full max-w-5xl"
+      onClick={(e) => e.stopPropagation()}
+    >
+      <button
+        type="button"
+        onClick={() => setShowIntroductionVideo(false)}
+        className="absolute -top-12 right-0 text-white text-3xl font-bold hover:text-yellow-400"
+        aria-label="Close introduction video"
+      >
+        ×
+      </button>
+
+      <video
+        ref={introductionVideoRef}
+        controls
+        autoPlay
+        playsInline
+        className="w-full max-h-[80vh] rounded-2xl shadow-2xl bg-black"
+        src={introductionVideo}
+      />
+    </div>
+  </div>
+)}
 
     </MainLayout>
     </>
